@@ -1,9 +1,77 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="style.css">
+<head>
+    <style>
+        
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+}
+
+table{
+    border-collapse: collapse;
+    width: 95%;
+    margin: 40px auto;
+    text-align: center;
+}
+
+th, td{
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+th{
+    background-color: #364c64;
+    color: rgb(255, 255, 255);
+}
+.day {
+    background-color: #a8ca6e;   /* Soft light grey */
+    font-weight: bold;
+}
+/* Subject Colors - Soft Minimal */
+
+.wd { background-color: #9dcdef; }        /* Light Blue */
+.icla { background-color: #fdebd0; }      /* Soft Peach */
+.tg { background-color: #e8daef; }        /* Light Purple */
+.egdl { background-color: #d5f5e3; }      /* Mint */
+.smp { background-color: #ffe0e9; }  /* Very Light Pastel Pink */
+
+.ap { background-color: #fadbd8; }        /* Soft Pink */
+.iks { background-color: hsl(206, 71%, 93%); }       /* Grey Blue */
+.llc { background-color: #f9e79f; }       /* Soft Gold */
+.sports { background-color: #d4efdf; }    /* Light Green */
+.club { background-color: #ebdef0; }      /* Lavender */
+.self { background-color: #f5eef8; }      /* Very Light Purple */
+.makeup { background-color: #f8c471; }    /* Soft Orange */
+.recess { 
+    background-color: #a7adb4; 
+    font-weight: bold;
+    color: rgb(52, 46, 46);
+}
+
+caption{
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+    </style>
+<style>
+table, th, td {
+  border: 1px solid black;class="egdl" class="wd"
+  border-collapse: collapse;
+}
+th, td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 20px;
+}
+</style>
+</head>
     <body>
         <h2>Develop a webpage to display tabular data (Timetable / Student Record) using
-advanced table tass and attributes.</h2>
+advanced table tags and attributes.</h2>
 
 <h2>SECOND SEMESTER TIMETABLE I SECTION</h2>
 
@@ -19,51 +87,52 @@ advanced table tass and attributes.</h2>
         <th>4:30-5:30pm<th>
     </tr>
     <tr>
-        <td>Monday</td>
-        <td colspan="2">WD LAB</td>
-        <td>ICLA</td>
-        <td rowspan="6">RECESS</td>
-        <td>TG</td>
-        <td colspan="2">EGDL</td>
+        <td class="day"><strong>Monday</strong></td>
+        <td class="wd"colspan="2">WD LAB(VC)</td>
+        <td class="icla">ICLA(MM)</td>
+        <td class="recess" rowspan="6">RECESS</td>
+        <td class="tg">TG(MM)</td>
+        <td class="egdl" class="wd"colspan="2">EGDL(NG)</td>
     </tr>
     <tr>
-        <td>Tuesday</td>
-        <td colspan="2">EGD</td>
-        <td>ICLA</td>
-        <td>SMP</td>
-        <td colspan="2">LLC</td>
+        <td class="day"><strong>Tuesday</strong></td>
+        <td class="egdl" class="wd"colspan="2">EGD(NG)</td>
+        <td class="icla">ICLA(MM)</td>
+        <td class="smp">SMP(SP)</td>
+        <td class="llc"colspan="2">LLC</td>
     </tr>
     <tr>
-        <td>Wednesday</td>
-        <td colspan="2">AP PRACTICAL</td>
-        <td>SMP</td>
-        <td colspan="2">SMPL</td>
-        <td>CLUB HOUR</td>
+        <td class="day"><strong>Wednesday</strong></td>
+        <td class="ap"colspan="2">AP PRACTICAL(KS)</td>
+        <td class="smp">SMP(SP)</td>
+        <td class="smp" colspan="2">SMPL(SP)</td>
+        <td class="club">CLUB HOUR</td>
     </tr>
     <tr>
-        <td>Thursday</td>
-        <td colspan="2">WD LAB</td>
-        <td>AP</td>
-        <td>ICLA</td>
-        <td colspan="2">MAKEUP CLASS</td>
+        <td class="day"><strong>Thursday</strong></td>
+        <td class="wd"colspan="2">WD LAB(VC)</td>
+        <td class="ap">AP(KS)</td>
+        <td class="icla">ICLA(MM)</td>
+        <td class="makeup" colspan="2">MAKEUP CLASS</td>
     </tr>
     <tr>
-        <td>Friday</td>
-        <td>ICLA</td>
-        <td>SELF LEARNING</td>
-        <td>SPORTS</td>
-        <td>IKS</td>
-        <td colspan="2">EGDL</td>
+        <td class="day"><strong>Friday</strong></td>
+        <td class="icla">ICLA(MM)</td>
+        <td class="self">SELF LEARNING</td>
+        <td class="sports">SPORTS</td>
+        <td class="iks">IKS(NC)</td>
+        <td class="egdl" colspan="2">EGDL(NG)</td>
     </tr>
     <tr>
-        <td>Saturday</td>
-        <td>AP</td>
-        <td>IKS</td>
-        <td>LLC</td>
-        <td>ICLA</td>
-        <td colspan="2">AP PRACTICAL</td>
+        <td class="day"><strong>Saturday</strong></td>
+        <td class="ap">AP(KS)</td>
+        <td class="iks">IKS(NC)</td>
+        <td class="llc">LLC</td>
+        <td class="icla">ICLA(MM)</td>
+        <td class="ap" colspan="2">AP PRACTICAL</td>
     </tr>
 </table>
 
     </body>
 </html>
+
