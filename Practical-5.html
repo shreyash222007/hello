@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume – Shreyash Amle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F9F5EF;
+      --dark:    #1C1C1E;
+      --accent:  #B5651D;
+      --muted:   #6B6B6B;
+      --border:  #DDD5C8;
+      --sidebar: #2C2C2E;
+      --sidebar-text: #E8DFD3;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+    }
+
+    .page {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      max-width: 960px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+      border-radius: 4px;
+      overflow: hidden;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      background: var(--sidebar);
+      color: var(--sidebar-text);
+      padding: 50px 28px;
+    }
+
+    .avatar-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .avatar {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      background: linear-gradient(135deg, #B5651D 0%, #8B4513 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .sidebar h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      text-align: center;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .sidebar .role {
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+    }
+
+    .sidebar-section { margin-bottom: 32px; }
+
+    .sidebar-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(181,101,29,0.35);
+      padding-bottom: 6px;
+    }
+
+    .contact-list { list-style: none; }
+    .contact-list li {
+      font-size: 13px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--sidebar-text);
+    }
+    .contact-list li span.icon { font-size: 15px; }
+
+    .contact-list a {
+      color: var(--sidebar-text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-list a:hover { color: var(--accent); }
+
+    .skills-list { list-style: none; }
+    .skills-list li {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .skill-name {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .skill-bar {
+      height: 3px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .lang-list { list-style: none; }
+    .lang-list li {
+      font-size: 13px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .lang-level { color: var(--accent); font-size: 12px; }
+
+    /* ── MAIN ── */
+    .main {
+      background: var(--cream);
+      padding: 48px 44px;
+    }
+
+    .main-header { margin-bottom: 36px; }
+    .main-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      line-height: 1.1;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .main-header h1 span { color: var(--accent); }
+    .tagline {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      margin: 28px 0;
+    }
+
+    .section { margin-bottom: 36px; }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--dark);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .exp-item { margin-bottom: 24px; }
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .exp-title { font-size: 15px; font-weight: 500; color: var(--dark); }
+    .exp-company { color: var(--accent); font-size: 13px; }
+    .exp-date {
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(181,101,29,0.1);
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .exp-desc { list-style: none; margin-top: 8px; }
+    .exp-desc li {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.6;
+    }
+    .exp-desc li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+      top: 2px;
+    }
+
+    .edu-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .edu-table thead tr { background: var(--sidebar); color: var(--sidebar-text); }
+    .edu-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+    .edu-table tbody tr { border-bottom: 1px solid var(--border); }
+    .edu-table tbody tr:last-child { border-bottom: none; }
+    .edu-table td { padding: 10px 14px; color: var(--muted); vertical-align: top; }
+    .edu-table td:first-child { color: var(--dark); font-weight: 500; }
+    .edu-table .gpa { color: var(--accent); font-weight: 500; }
+
+    .cert-list { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+    .cert-list li {
+      background: rgba(181,101,29,0.08);
+      border: 1px solid rgba(181,101,29,0.25);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    .links-row { display: flex; flex-wrap: wrap; gap: 12px; }
+    .link-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--dark);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      font-weight: 500;
+    }
+    .link-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(15, 10, 5, 0.05);
+    }
+
+    @media (max-width: 680px) {
+      .page { grid-template-columns: 1fr; }
+      .main { padding: 32px 24px; }
+      .main-header h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="avatar-wrap">
+      <img class="avatar" src="Shreyash Passport Photo.jpeg" alt="Shreyash Photo"> 
+    </div>
+
+    <h2>Shreyash Amle</h2>
+    <p class="role">Student of Artificial Intelligece & Machine Learning</p>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">Contact</p>
+      <ul class="contact-list">
+        <li><span class="icon">📧</span><a href="mailto:shreyasha.ml25@sbjit.edu.in">shreyasha.ml25@sbjit.edu.in</a></li>
+        <li><span class="icon">📞</span> +91 8735020207</li>
+        <li><span class="icon">📍</span> Nagpur, Maharashtra</li>
+        <li><span class="icon">🌐</span><a href="https://linkedin.com/in/shreyashamle" target="_blank">LinkedIn</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">Skills</p>
+      <ul class="skills-list">
+        <li>
+          <div class="skill-name"><span>HTML</span><span>95%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+        </li>
+        <li>
+          <div class="skill-name"><span>CSS</span><span>90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </li>
+        <li>
+          <div class="skill-name"><span>C++</span><span>85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </li>
+        <li>
+          <div class="skill-name"><span>Python</span><span>78%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+        </li>
+        <li>
+          <div class="skill-name"><span>C-Programming</span><span>97%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:97%"></div></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">Languages</p>
+      <ul class="lang-list">
+        <li><span>English</span><span class="lang-level">Native</span></li>
+        <li><span>Hindi</span><span class="lang-level">Fluent</span></li>
+        <li><span>Marathi</span><span class="lang-level">Fluent</span></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="main-header">
+      <h1>Shreyash <span>Amle</span></h1>
+      <p class="tagline">Building elegant digital experiences — one component at a time.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <h2 class="section-title">About Me</h2>
+      <p style="font-size:14px; color:var(--muted); line-height:1.8;">
+        I am a first-year Computer Engineering student with a strong interest in 
+        software development, problem-solving, and emerging technologies. 
+        Currently, I am building my foundation in programming, web development, 
+        and data structures. I enjoy working on small projects that help me 
+        apply theoretical concepts to practical solutions. My goal is to 
+        specialize in areas like Artificial Intelligence and Smart City 
+        development, contributing to innovative solutions that improve everyday life.
+    </p>
+
+      </p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Experience</h2>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Hackathon Participation – HACKWHAK 3.0</div>
+            <div class="exp-company">Organiser - S.B Jain Institute of Technology</div>
+          </div>
+          <span class="exp-date">20 Feb 2026</span>
+        </div>
+        <ul class="exp-desc">
+          <li>A National Level 24-hour Hackathon .</li>
+          <li>Built a "Personal Learning Progress Visualizer".</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Hackathon Pariticipation - Prompt Verse</div>
+            <div class="exp-company">Organiser - CSE Dept. S.B Jain</div>
+          </div>
+          <span class="exp-date">5 Oct 2025</span>
+        </div>
+        <ul class="exp-desc">
+          <li>A College Level 6-hour Hackathon.</li>
+          <li>Constructed a "Mini OTT Platform" for college club to host short flims and cultural performances.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Workshop – Introduction to Python Programming</div>
+            <div class="exp-company">Organiser - Code with Harry</div>
+          </div>
+          <span class="exp-date">2025</span>
+        </div>
+        <ul class="exp-desc">
+          <li>Attended a beginner-level workshop to strengthen programming fundamentals and problem-solving skills.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Education</h2>
+      <table class="edu-table">
+        <thead>
+          <tr>
+            <th>Degree/Qualification</th>
+            <th>Institution/Board</th>
+            <th>Year</th>
+            <th>Percentage/CGPA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>B.Tech in Computer Science and Engineering</td>
+            <td>S.B Jain Institute of Technology</td>
+            <td>Pursuing (2029)</td>
+            <td class="gpa">9.4 / 10 (1st Sem)</td>
+          </tr>
+          <tr>
+            <td>HSC</td>
+            <td>Maharastra Board</td>
+            <td>2025</td>
+            <td class="gpa">76.17 %</td>
+          </tr>
+           <tr>
+            <td>SSC</td>
+            <td>Maharastra Board</td>
+            <td>2023</td>
+            <td class="gpa">87.20 %</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Certifications</h2>
+      <ul class="cert-list">
+        <li>AWS Certified Developer</li>
+        <li>Google UX Design Certificate</li>
+        <li>Nvedia Certified Associate</li>
+        <li>Meta Front-End Developer</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Find Me Online</h2>
+      <div class="links-row">
+        <a class="link-chip" href="https://github.com/shreyash222007" target="_blank">🐙 GitHub</a>
+        <a class="link-chip" href="https://linkedin.com/in/shreyashamle" target="_blank">💼 LinkedIn</a>
+        <a class="link-chip" href="https://shreyashamle.dev" target="_blank">🌐 Portfolio</a>
+        <a class="link-chip" href="mailto:shreyasha.ml25@sbjit.edu.in">✉️ Email Me</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
