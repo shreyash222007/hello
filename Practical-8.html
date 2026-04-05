@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image - Gallery</title>
+  <link rel="stylesheet" href="Practical-8.css" />
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────── -->
+  <!--<header class="gallery-header">
+    <span class="header-eyebrow">Visual Archive</span>
+    <h1>Lu<em>mière</em></h1>
+    <div class="header-meta">
+      <span class="header-count">12 Works</span>
+      <div class="header-divider"></div>
+      <span class="header-year">MMXXV</span>
+    </div>
+  </header>
+
+  <!-- ── Filter Bar ──────────────────────────────────── -->
+  <nav class="filter-bar">
+    <span class="filter-label">Filter</span>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="landscape">Landscape</button>
+    <button class="filter-btn" data-filter="portrait">Portrait</button>
+    <button class="filter-btn" data-filter="abstract">Abstract</button>
+    <button class="filter-btn" data-filter="architecture">Architecture</button>
+    <button class="filter-btn" data-filter="nature">Nature</button>
+  </nav>
+
+  <!-- ── Gallery Grid ────────────────────────────────── -->
+  <main class="gallery-grid" id="gallery">
+
+    <article class="gallery-item featured" data-category="landscape"
+      data-title="Golden Hour" data-year="2025" data-medium="Digital Photography" data-id="1"
+      data-desc="A fleeting study of light as the sun descends below the ridge, saturating the valley in amber and rust.">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80" alt="Golden Hour" />
+      <div class="item-overlay">
+        <span class="item-category">Landscape</span>
+        <h2 class="item-title">Golden Hour</h2>
+        <div class="item-meta">
+          <span class="item-year">2025</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Photography</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="portrait"
+      data-title="Lata Mangeshkar" data-year="2024" data-medium="Film" data-id="2"
+      data-desc="An intimate study of a figure suspended in silence — neither present nor absent, caught between thought and stillness.">
+      <img src="LM.jpg" alt="Lata Mangeshkar" />
+      <div class="item-overlay">
+        <span class="item-category">Portrait</span>
+        <h2 class="item-title">Lata Mangeshkar</h2>
+        <div class="item-meta">
+          <span class="item-year">2024</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Film</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="architecture"
+      data-title="Concrete & Sky" data-year="2025" data-medium="Digital" data-id="3"
+      data-desc="Brutalist geometry meets natural light in this study of structural tension — form stripped of ornament, honest in its mass.">
+      <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&q=80" alt="Concrete & Sky" />
+      <div class="item-overlay">
+        <span class="item-category">Architecture</span>
+        <h2 class="item-title">Concrete & Sky</h2>
+        <div class="item-meta">
+          <span class="item-year">2025</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Digital</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="abstract"
+      data-title="Chromatic Drift" data-year="2025" data-medium="Mixed Media" data-id="4"
+      data-desc="Pigment suspended in motion, captured at the moment of dissolution — color as emotion, form as intention.">
+      <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=700&q=80" alt="Chromatic Drift" />
+      <div class="item-overlay">
+        <span class="item-category">Abstract</span>
+        <h2 class="item-title">Chromatic Drift</h2>
+        <div class="item-meta">
+          <span class="item-year">2025</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Mixed Media</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="nature"
+      data-title="Mist & Canopy" data-year="2024" data-medium="Photography" data-id="5"
+      data-desc="Early morning fog filters through a dense canopy — a quiet document of the forest's own breath.">
+      <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&q=80" alt="Mist & Canopy" />
+      <div class="item-overlay">
+        <span class="item-category">Nature</span>
+        <h2 class="item-title">Mist & Canopy</h2>
+        <div class="item-meta">
+          <span class="item-year">2024</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Photography</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="abstract"
+      data-title="Fracture Lines" data-year="2025" data-medium="Digital" data-id="6"
+      data-desc="Pattern as language: the geometry of breakage rendered with architectural precision and emotional charge.">
+      <img src="https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=600&q=80" alt="Fracture Lines" />
+      <div class="item-overlay">
+        <span class="item-category">Abstract</span>
+        <h2 class="item-title">Fracture Lines</h2>
+        <div class="item-meta">
+          <span class="item-year">2025</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Digital</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="landscape"
+      data-title="Shoreline at Dusk" data-year="2024" data-medium="Film" data-id="7"
+      data-desc="Where tide meets stone — the horizon holds its breath between the dying light and the first cold stars.">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80" alt="Shoreline at Dusk" />
+      <div class="item-overlay">
+        <span class="item-category">Landscape</span>
+        <h2 class="item-title">Shoreline at Dusk</h2>
+        <div class="item-meta">
+          <span class="item-year">2024</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Film</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="portrait"
+      data-title="Reverie" data-year="2025" data-medium="Digital" data-id="8"
+      data-desc="The subject is present yet elsewhere — light plays across the face as if narrating a memory not our own.">
+      <img src="https://images.unsplash.com/photo-1520110120835-c96534a4c984?w=700&q=80" alt="Reverie" />
+      <div class="item-overlay">
+        <span class="item-category">Portrait</span>
+        <h2 class="item-title">Reverie</h2>
+        <div class="item-meta">
+          <span class="item-year">2025</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Digital</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="architecture"
+      data-title="Vault" data-year="2024" data-medium="Photography" data-id="9"
+      data-desc="A cathedral's ribbed vault stretches upward — stone engineered to sing, carved gravity reaching toward light.">
+      <img src="https://images.unsplash.com/photo-1555993539-1732b0258235?w=700&q=80" alt="Vault" />
+      <div class="item-overlay">
+        <span class="item-category">Architecture</span>
+        <h2 class="item-title">Vault</h2>
+        <div class="item-meta">
+          <span class="item-year">2024</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Photography</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="nature"
+      data-title="Desert Bloom" data-year="2025" data-medium="Film" data-id="10"
+      data-desc="Life persists against all logic in the cracked alkali flat — a single bloom, defiant, precise, impossible.">
+      <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=700&q=80" alt="Desert Bloom" />
+      <div class="item-overlay">
+        <span class="item-category">Nature</span>
+        <h2 class="item-title">Desert Bloom</h2>
+        <div class="item-meta">
+          <span class="item-year">2025</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Film</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="abstract"
+      data-title="Tidal Memory" data-year="2024" data-medium="Mixed Media" data-id="11"
+      data-desc="The archive of water — layered sediment compressed into visual poetry, strata as a record of passage.">
+      <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=700&q=80" alt="Tidal Memory" />
+      <div class="item-overlay">
+        <span class="item-category">Abstract</span>
+        <h2 class="item-title">Tidal Memory</h2>
+        <div class="item-meta">
+          <span class="item-year">2024</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Mixed Media</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+    <article class="gallery-item" data-category="landscape"
+      data-title="Altitude" data-year="2025" data-medium="Digital" data-id="12"
+      data-desc="Above the treeline, the world simplifies — ridge, sky, silence. Everything unnecessary has been stripped away.">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80" alt="Altitude" />
+      <div class="item-overlay">
+        <span class="item-category">Landscape</span>
+        <h2 class="item-title">Altitude</h2>
+        <div class="item-meta">
+          <span class="item-year">2025</span>
+          <div class="item-dot"></div>
+          <span class="item-medium">Digital</span>
+        </div>
+      </div>
+      <div class="item-corner"></div>
+    </article>
+
+  </main>
+
+  <!-- ── Lightbox ─────────────────────────────────────── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close">✕ Close</button>
+      <div class="lightbox-img-wrap">
+        <img src="" alt="" id="lightbox-img" />
+      </div>
+      <div class="lightbox-info">
+        <p class="lightbox-eyebrow" id="lb-category">—</p>
+        <h2 class="lightbox-title" id="lb-title">—</h2>
+        <p class="lightbox-desc"  id="lb-desc">—</p>
+        <div class="lightbox-rule"></div>
+        <p class="lightbox-detail" id="lb-year">—</p>
+        <p class="lightbox-detail" id="lb-medium">—</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Script ───────────────────────────────────────── -->
+  <script>
+    /* ── Filter ─────────────────────────────────── */
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items      = document.querySelectorAll('.gallery-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        items.forEach(item => {
+          const match = f === 'all' || item.dataset.category === f;
+          item.style.opacity    = match ? '1' : '0.15';
+          item.style.pointerEvents = match ? 'auto' : 'none';
+          item.style.transition = 'opacity 0.4s ease';
+        });
+      });
+    });
+
+    /* ── Lightbox ────────────────────────────────── */
+    const lightbox = document.getElementById('lightbox');
+    const lbImg    = document.getElementById('lightbox-img');
+    const lbCat    = document.getElementById('lb-category');
+    const lbTitle  = document.getElementById('lb-title');
+    const lbDesc   = document.getElementById('lb-desc');
+    const lbYear   = document.getElementById('lb-year');
+    const lbMedium = document.getElementById('lb-medium');
+
+    function openLightbox(item) {
+      const img = item.querySelector('img');
+      lbImg.src       = img.src.replace(/w=\d+/, 'w=1400');
+      lbImg.alt       = img.alt;
+      lbCat.textContent    = item.dataset.category.toUpperCase();
+      lbTitle.textContent  = item.dataset.title;
+      lbDesc.textContent   = item.dataset.desc;
+      lbYear.textContent   = item.dataset.year;
+      lbMedium.textContent = item.dataset.medium;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    items.forEach(item => {
+      item.addEventListener('click', () => openLightbox(item));
+    });
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox-backdrop').addEventListener('click', closeLightbox);
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>
