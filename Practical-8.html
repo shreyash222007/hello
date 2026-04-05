@@ -8,17 +8,6 @@
 </head>
 <body>
 
-  <!-- ── Header ──────────────────────────────────────── -->
-  <!--<header class="gallery-header">
-    <span class="header-eyebrow">Visual Archive</span>
-    <h1>Lu<em>mière</em></h1>
-    <div class="header-meta">
-      <span class="header-count">12 Works</span>
-      <div class="header-divider"></div>
-      <span class="header-year">MMXXV</span>
-    </div>
-  </header>
-
   <!-- ── Filter Bar ──────────────────────────────────── -->
   <nav class="filter-bar">
     <span class="filter-label">Filter</span>
@@ -245,65 +234,6 @@
       </div>
     </div>
   </div>
-
-  <!-- ── Script ───────────────────────────────────────── -->
-  <script>
-    /* ── Filter ─────────────────────────────────── */
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const items      = document.querySelectorAll('.gallery-item');
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const f = btn.dataset.filter;
-        items.forEach(item => {
-          const match = f === 'all' || item.dataset.category === f;
-          item.style.opacity    = match ? '1' : '0.15';
-          item.style.pointerEvents = match ? 'auto' : 'none';
-          item.style.transition = 'opacity 0.4s ease';
-        });
-      });
-    });
-
-    /* ── Lightbox ────────────────────────────────── */
-    const lightbox = document.getElementById('lightbox');
-    const lbImg    = document.getElementById('lightbox-img');
-    const lbCat    = document.getElementById('lb-category');
-    const lbTitle  = document.getElementById('lb-title');
-    const lbDesc   = document.getElementById('lb-desc');
-    const lbYear   = document.getElementById('lb-year');
-    const lbMedium = document.getElementById('lb-medium');
-
-    function openLightbox(item) {
-      const img = item.querySelector('img');
-      lbImg.src       = img.src.replace(/w=\d+/, 'w=1400');
-      lbImg.alt       = img.alt;
-      lbCat.textContent    = item.dataset.category.toUpperCase();
-      lbTitle.textContent  = item.dataset.title;
-      lbDesc.textContent   = item.dataset.desc;
-      lbYear.textContent   = item.dataset.year;
-      lbMedium.textContent = item.dataset.medium;
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    items.forEach(item => {
-      item.addEventListener('click', () => openLightbox(item));
-    });
-
-    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-    document.getElementById('lightbox-backdrop').addEventListener('click', closeLightbox);
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeLightbox();
-    });
-  </script>
 
 </body>
 </html>
