@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lumière — Bootstrap Showcase</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --cream:   #faf8f4;
+      --sand:    #f0ece3;
+      --warm:    #e8e0d0;
+      --accent:  #b5813f;
+      --accent2: #7a9e87;
+      --dark:    #2c2417;
+      --mid:     #6b5c45;
+      --light-text: #9a8b77;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: rgba(250,248,244,0.92) !important;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--warm);
+      padding: 1rem 0;
+    }
+    .navbar-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--dark) !important;
+      letter-spacing: 0.03em;
+    }
+    .navbar-brand span { color: var(--accent); }
+    .nav-link {
+      color: var(--mid) !important;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem !important;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--accent) !important; }
+    .navbar-nav .btn {
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+    }
+    .btn-outline-gold {
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      background: transparent;
+      border-radius: 0;
+      padding: 0.38rem 1.1rem;
+      transition: all 0.22s;
+    }
+    .btn-outline-gold:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ── HERO / CAROUSEL ── */
+    #heroCarousel {
+      margin-top: 72px;
+    }
+    .carousel-slide {
+      height: 92vh;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide-1 { background: linear-gradient(135deg, #f5efe6 0%, #ede4d8 100%); }
+    .slide-2 { background: linear-gradient(135deg, #e8f0ea 0%, #d4e6d9 100%); }
+    .slide-3 { background: linear-gradient(135deg, #f0ece3 0%, #e3ddd4 100%); }
+
+    .slide-deco {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.18;
+    }
+    .deco-a { width: 500px; height: 500px; background: var(--accent); top: -120px; right: -80px; }
+    .deco-b { width: 320px; height: 320px; background: var(--accent2); bottom: -60px; left: -60px; }
+
+    .carousel-caption-custom {
+      position: relative;
+      z-index: 2;
+      text-align: left;
+      max-width: 580px;
+    }
+    .slide-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.3rem 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .carousel-caption-custom h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.12;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+    .carousel-caption-custom p {
+      color: var(--mid);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 2rem;
+    }
+    .btn-primary-gold {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 0;
+      padding: 0.75rem 2rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.22s, transform 0.2s;
+    }
+    .btn-primary-gold:hover {
+      background: #9a6c32;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--dark);
+      border: 1.5px solid var(--warm);
+      border-radius: 0;
+      padding: 0.75rem 2rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.22s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--dark);
+      background: var(--dark);
+      color: #fff;
+    }
+
+    .carousel-indicators [data-bs-target] {
+      width: 28px;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0.35;
+      border: none;
+      border-radius: 0;
+      transition: opacity 0.3s, width 0.3s;
+    }
+    .carousel-indicators .active {
+      opacity: 1;
+      width: 48px;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      filter: invert(1) brightness(0.3);
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+    .section-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin: 1.2rem auto 0;
+    }
+
+    /* ── SERVICES STRIP ── */
+    .services-strip {
+      background: var(--dark);
+      padding: 2.5rem 0;
+    }
+    .service-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+    }
+    .service-item i {
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+
+    /* ── CARDS SECTION ── */
+    .cards-section {
+      background: var(--cream);
+      padding: 6rem 0;
+    }
+    .card-custom {
+      background: #fff;
+      border: 1px solid var(--warm);
+      border-radius: 0;
+      overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .card-custom:hover {
+      box-shadow: 0 12px 40px rgba(44,36,23,0.10);
+      transform: translateY(-4px);
+    }
+    .card-img-wrapper {
+      overflow: hidden;
+      height: 220px;
+    }
+    .card-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .card-custom:hover .card-img-wrapper img {
+      transform: scale(1.06);
+    }
+    .card-body { padding: 1.6rem; }
+    .card-category {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .card-text {
+      font-size: 0.88rem;
+      color: var(--light-text);
+      line-height: 1.65;
+    }
+    .card-footer-custom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.6rem;
+      border-top: 1px solid var(--sand);
+      background: var(--cream);
+    }
+    .card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--dark);
+    }
+    .btn-card {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      background: none;
+      padding: 0.38rem 0.9rem;
+      transition: all 0.2s;
+    }
+    .btn-card:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ── STATS BAND ── */
+    .stats-band {
+      background: var(--sand);
+      border-top: 1px solid var(--warm);
+      border-bottom: 1px solid var(--warm);
+      padding: 4rem 0;
+    }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--light-text);
+      margin-top: 0.4rem;
+    }
+
+    /* ── TESTIMONIAL ── */
+    .testimonial-section {
+      padding: 6rem 0;
+      background: var(--cream);
+    }
+    .testimonial-card {
+      background: var(--sand);
+      border: 1px solid var(--warm);
+      padding: 2.5rem;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      color: var(--accent);
+      opacity: 0.2;
+      position: absolute;
+      top: 0;
+      left: 1.5rem;
+      line-height: 1;
+    }
+    .testimonial-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--dark);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .testimonial-author {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+    .stars { color: var(--accent); font-size: 0.85rem; margin-bottom: 0.8rem; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--dark);
+      padding: 6rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(181,129,63,0.15);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      width: 900px;
+      height: 900px;
+      border-radius: 50%;
+      border: 1px solid rgba(181,129,63,0.08);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    .cta-inner { position: relative; z-index: 2; }
+    .cta-section h2 {
+      color: #fff;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .cta-section p { color: rgba(255,255,255,0.55); margin-bottom: 2.5rem; }
+    .btn-cta-light {
+      background: #fff;
+      color: var(--dark);
+      border: none;
+      border-radius: 0;
+      padding: 0.85rem 2.5rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.22s, transform 0.2s;
+    }
+    .btn-cta-light:hover {
+      background: var(--accent);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .btn-cta-outline {
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 0;
+      padding: 0.85rem 2.5rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.22s;
+    }
+    .btn-cta-outline:hover {
+      border-color: #fff;
+      color: #fff;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1e1810;
+      color: rgba(255,255,255,0.6);
+      padding: 5rem 0 0;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
+    }
+    .footer-brand span { color: var(--accent); }
+    .footer-desc { font-size: 0.88rem; line-height: 1.7; max-width: 260px; }
+    .footer-heading {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 1.4rem;
+    }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 0.6rem; }
+    .footer-links a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem;
+      margin-right: 0.5rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .footer-social a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.5rem 0;
+      margin-top: 4rem;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     NAVBAR
+══════════════════════════════ -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Lumière<span>.</span></a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Collection</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Journal</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-3">
+        <a href="#" class="text-decoration-none text-muted"><i class="bi bi-search" style="font-size:1.1rem;"></i></a>
+        <a href="#" class="text-decoration-none text-muted"><i class="bi bi-bag" style="font-size:1.1rem;"></i></a>
+        <a href="#" class="btn btn-outline-gold">Sign In</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════
+     CAROUSEL
+══════════════════════════════ -->
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+
+  <div class="carousel-indicators" style="bottom:2.5rem;">
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+  </div>
+
+  <div class="carousel-inner">
+    <!-- Slide 1 -->
+    <div class="carousel-item active">
+      <div class="carousel-slide slide-1">
+        <div class="slide-deco deco-a"></div>
+        <div class="slide-deco deco-b"></div>
+        <div class="container">
+          <div class="carousel-caption-custom">
+            <span class="slide-tag">New Arrivals 2025</span>
+            <h1>Crafted for the<br/><em>Discerning Eye</em></h1>
+            <p>Discover our curated collection of timeless pieces designed to elevate your everyday living with understated elegance.</p>
+            <div class="d-flex gap-3 flex-wrap">
+              <a href="#" class="btn btn-primary-gold">Explore Collection</a>
+              <a href="#" class="btn btn-ghost">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-item">
+      <div class="carousel-slide slide-2">
+        <div class="slide-deco deco-a" style="background:var(--accent2);"></div>
+        <div class="slide-deco deco-b" style="background:var(--accent);"></div>
+        <div class="container">
+          <div class="carousel-caption-custom">
+            <span class="slide-tag">Sustainable Design</span>
+            <h1>Beauty That<br/><em>Endures</em></h1>
+            <p>Every piece is thoughtfully made using responsibly sourced materials, built to last a lifetime and beyond.</p>
+            <div class="d-flex gap-3 flex-wrap">
+              <a href="#" class="btn btn-primary-gold">Our Story</a>
+              <a href="#" class="btn btn-ghost">Shop Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+      <div class="carousel-slide slide-3">
+        <div class="slide-deco deco-a"></div>
+        <div class="slide-deco deco-b"></div>
+        <div class="container">
+          <div class="carousel-caption-custom">
+            <span class="slide-tag">Limited Edition</span>
+            <h1>The Art of<br/><em>Refinement</em></h1>
+            <p>A limited series of exclusive collaborations with master artisans from around the world, available for a short time.</p>
+            <div class="d-flex gap-3 flex-wrap">
+              <a href="#" class="btn btn-primary-gold">View Edition</a>
+              <a href="#" class="btn btn-ghost">Reserve Yours</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" style="width:60px;">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" style="width:60px;">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- ══════════════════════════════
+     SERVICES STRIP (Grid)
+══════════════════════════════ -->
+<section class="services-strip">
+  <div class="container">
+    <div class="row gy-3 text-center text-md-start">
+      <div class="col-6 col-md-3">
+        <div class="service-item justify-content-center justify-content-md-start">
+          <i class="bi bi-truck"></i>
+          <div>
+            <div style="color:#fff;font-size:0.88rem;font-weight:500;">Free Shipping</div>
+            <div style="font-size:0.76rem;">On orders over ₹2,000</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="service-item justify-content-center justify-content-md-start">
+          <i class="bi bi-shield-check"></i>
+          <div>
+            <div style="color:#fff;font-size:0.88rem;font-weight:500;">2-Year Warranty</div>
+            <div style="font-size:0.76rem;">Quality guaranteed</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="service-item justify-content-center justify-content-md-start">
+          <i class="bi bi-arrow-return-left"></i>
+          <div>
+            <div style="color:#fff;font-size:0.88rem;font-weight:500;">Easy Returns</div>
+            <div style="font-size:0.76rem;">30-day return policy</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="service-item justify-content-center justify-content-md-start">
+          <i class="bi bi-headset"></i>
+          <div>
+            <div style="color:#fff;font-size:0.88rem;font-weight:500;">24/7 Support</div>
+            <div style="font-size:0.76rem;">Always here to help</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     CARDS SECTION (Grid System)
+══════════════════════════════ -->
+<section class="cards-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="section-label">Featured Collection</span>
+      <h2 class="section-title">Curated Essentials</h2>
+      <div class="section-divider mx-auto"></div>
+    </div>
+
+    <!-- Grid: 3 cols on lg, 2 on md, 1 on sm -->
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card-custom">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="Linen Sofa"/>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Living Room</div>
+            <div class="card-title">Ivory Linen Sofa</div>
+            <p class="card-text">A generous three-seater wrapped in Belgian linen, hand-stitched with precision for lasting comfort.</p>
+          </div>
+          <div class="card-footer-custom">
+            <span class="card-price">₹45,000</span>
+            <div class="d-flex gap-2">
+              <button class="btn btn-card"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-card">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card-custom">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&q=80" alt="Ceramic Lamp"/>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Lighting</div>
+            <div class="card-title">Spun Ceramic Lamp</div>
+            <p class="card-text">Hand-thrown stoneware base with a warm-white linen shade. Diffuses a soft, amber glow.</p>
+          </div>
+          <div class="card-footer-custom">
+            <span class="card-price">₹8,500</span>
+            <div class="d-flex gap-2">
+              <button class="btn btn-card"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-card">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card-custom">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=600&q=80" alt="Oak Table"/>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Dining</div>
+            <div class="card-title">Solid Oak Table</div>
+            <p class="card-text">A six-seat dining table in raw white oak. Each grain pattern is entirely unique to the tree.</p>
+          </div>
+          <div class="card-footer-custom">
+            <span class="card-price">₹72,000</span>
+            <div class="d-flex gap-2">
+              <button class="btn btn-card"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-card">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card-custom">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=600&q=80" alt="Throw Pillow"/>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Textiles</div>
+            <div class="card-title">Woven Throw Pillow</div>
+            <p class="card-text">Handwoven in a Rajasthani cooperative using ethically sourced organic cotton.</p>
+          </div>
+          <div class="card-footer-custom">
+            <span class="card-price">₹1,800</span>
+            <div class="d-flex gap-2">
+              <button class="btn btn-card"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-card">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card-custom">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=600&q=80" alt="Wall Mirror"/>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Décor</div>
+            <div class="card-title">Arch Wall Mirror</div>
+            <p class="card-text">A full-length arch mirror with a hand-rubbed brass frame that brightens any space effortlessly.</p>
+          </div>
+          <div class="card-footer-custom">
+            <span class="card-price">₹14,500</span>
+            <div class="d-flex gap-2">
+              <button class="btn btn-card"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-card">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card-custom">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=600&q=80" alt="Planter"/>
+          </div>
+          <div class="card-body">
+            <div class="card-category">Garden</div>
+            <div class="card-title">Terracotta Planter Set</div>
+            <p class="card-text">A trio of hand-formed terracotta pots in graduated sizes, sealed with a matte finish glaze.</p>
+          </div>
+          <div class="card-footer-custom">
+            <span class="card-price">₹3,200</span>
+            <div class="d-flex gap-2">
+              <button class="btn btn-card"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-card">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons showcase row -->
+    <div class="text-center mt-5 d-flex gap-3 flex-wrap justify-content-center">
+      <button class="btn btn-primary-gold">View All Products</button>
+      <button class="btn btn-outline-gold">Filter by Category</button>
+      <button class="btn btn-ghost">Download Catalogue</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     STATS BAND (Grid)
+══════════════════════════════ -->
+<section class="stats-band">
+  <div class="container">
+    <div class="row text-center gy-4">
+      <div class="col-6 col-md-3">
+        <div class="stat-number">12+</div>
+        <div class="stat-label">Years of Craft</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-number">340</div>
+        <div class="stat-label">Artisan Partners</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-number">28K</div>
+        <div class="stat-label">Happy Homes</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-number">4.9</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FOOTER (Grid System)
+══════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="row gy-5">
+      <!-- Brand col -->
+      <div class="col-12 col-lg-4">
+        <div class="footer-brand">Lumière<span>.</span></div>
+        <p class="footer-desc">Bringing the spirit of artisanal craft into modern homes. Every piece carries the soul of its maker.</p>
+        <div class="footer-social mt-3">
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-pinterest"></i></a>
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div class="col-6 col-md-3 col-lg-2">
+        <div class="footer-heading">Shop</div>
+        <ul class="footer-links">
+          <li><a href="#">Living Room</a></li>
+          <li><a href="#">Bedroom</a></li>
+          <li><a href="#">Dining</a></li>
+          <li><a href="#">Lighting</a></li>
+          <li><a href="#">Textiles</a></li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-md-3 col-lg-2">
+        <div class="footer-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Artisans</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="col-6 col-md-3 col-lg-2">
+        <div class="footer-heading">Support</div>
+        <ul class="footer-links">
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="col-12 col-md-3 col-lg-2">
+        <div class="footer-heading">Newsletter</div>
+        <p style="font-size:0.82rem;line-height:1.6;margin-bottom:1rem;">Early access to new arrivals, right in your inbox.</p>
+        <input type="email" class="form-control" placeholder="your@email.com" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:0;font-size:0.82rem;margin-bottom:0.5rem;"/>
+        <button class="btn btn-primary-gold w-100" style="font-size:0.75rem;padding:0.5rem;">Subscribe</button>
+      </div>
+    </div>
+
+    <!-- Footer bottom -->
+    <div class="footer-bottom">
+      <div class="row align-items-center">
+        <div class="col-12 col-md-6 text-center text-md-start">
+          &copy; 2025 Lumière Home. All rights reserved.
+        </div>
+        <div class="col-12 col-md-6 text-center text-md-end mt-2 mt-md-0">
+          <a href="#" style="color:rgba(255,255,255,0.4);text-decoration:none;margin:0 0.8rem;font-size:0.78rem;">Privacy Policy</a>
+          <a href="#" style="color:rgba(255,255,255,0.4);text-decoration:none;margin:0 0.8rem;font-size:0.78rem;">Terms of Service</a>
+          <a href="#" style="color:rgba(255,255,255,0.4);text-decoration:none;margin:0 0.8rem;font-size:0.78rem;">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
