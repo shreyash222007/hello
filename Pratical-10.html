@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML iFrames Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f7fa;
+      color: #2d3748;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 1.5rem 2rem;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: #ebf8ff;
+      color: #2b6cb0;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1a202c;
+    }
+
+    header p {
+      font-size: 0.85rem;
+      color: #718096;
+      margin-top: 0.3rem;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .section-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #718096;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title span {
+      background: #4299e1;
+      color: white;
+      border-radius: 3px;
+      padding: 0.1rem 0.45rem;
+      margin-right: 0.5rem;
+      font-size: 0.65rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: #f7fafc;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0.75rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .dots { display: flex; gap: 5px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.r { background: #fc8181; }
+    .dot.y { background: #f6e05e; }
+    .dot.g { background: #68d391; }
+
+    .url-bar {
+      flex: 1;
+      background: #edf2f7;
+      border-radius: 5px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.72rem;
+      color: #4a5568;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+    }
+
+    .tag-map  { background: #e6fffa; color: #2c7a7b; }
+    .tag-ext  { background: #ebf4ff; color: #2b6cb0; }
+    .tag-pane { background: #faf5ff; color: #6b46c1; }
+
+    .card-body { padding: 1rem; }
+
+    iframe {
+      width: 100%;
+      display: block;
+      border: none;
+      border-radius: 6px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    @media (max-width: 700px) {
+      .split { grid-template-columns: 1fr; }
+      main { padding: 1rem; }
+    }
+
+    .code-wrap {
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 0.8rem;
+    }
+
+    .code-label {
+      padding: 0.5rem 1rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #a0aec0;
+      border-bottom: 1px solid #e2e8f0;
+      background: #edf2f7;
+    }
+
+    pre {
+      padding: 1rem 1.2rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      line-height: 1.85;
+      color: #4a5568;
+      overflow-x: auto;
+    }
+
+    .kw { color: #805ad5; }
+    .at { color: #2b6cb0; }
+    .vl { color: #276749; }
+    .cm { color: #a0aec0; font-style: italic; }
+    .tg { color: #c53030; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    th {
+      background: #f7fafc;
+      text-align: left;
+      padding: 0.7rem 1rem;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #718096;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #f0f4f8;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    td:first-child { font-family: 'Courier New', monospace; font-size: 0.75rem; color: #2b6cb0; font-weight: 600; }
+    td:nth-child(2) { color: #4a5568; }
+    td:nth-child(3) { font-family: 'Courier New', monospace; font-size: 0.72rem; color: #718096; }
+
+    .note {
+      background: #fffbeb;
+      border: 1px solid #f6e05e;
+      border-left: 3px solid #d69e2e;
+      border-radius: 6px;
+      padding: 0.85rem 1.1rem;
+      font-size: 0.8rem;
+      color: #744210;
+      line-height: 1.65;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.72rem;
+      color: #a0aec0;
+      border-top: 1px solid #e2e8f0;
+      background: #fff;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Web Designing Lab</div>
+  <h1>HTML Frames &amp; &lt;iframe&gt; Embedding</h1>
+  <p>Demonstrating embedding of Maps and External Pages using the &lt;iframe&gt; element</p>
+</header>
+
+<main>
+
+  <!-- 01 GOOGLE MAPS -->
+  <div>
+    <div class="section-title"><span>01</span> Embedding Google Maps</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+        <div class="url-bar">google.com/maps/embed — Nagpur, Maharashtra</div>
+        <span class="tag tag-map">Map Embed</span>
+      </div>
+      <div class="card-body">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236282.56399370553!2d78.88448!3d21.14631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c0a5a31faf13%3A0x19ca9f8e5165c0a1!2sNagpur%2C%20Maharashtra!5e0!3m2!1sen!2sin"
+          height="400"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Google Maps — Nagpur">
+        </iframe>
+      </div>
+    </div>
+    <div class="code-wrap">
+      <div class="code-label">HTML Code</div>
+      <pre><span class="tg">&lt;iframe</span>
+  <span class="at">src</span>=<span class="vl">"https://www.google.com/maps/embed?pb=...Nagpur"</span>
+  <span class="at">width</span>=<span class="vl">"100%"</span>  <span class="at">height</span>=<span class="vl">"400"</span>
+  <span class="at">allowfullscreen</span>=<span class="vl">""</span>
+  <span class="at">loading</span>=<span class="vl">"lazy"</span>
+  <span class="at">referrerpolicy</span>=<span class="vl">"no-referrer-when-downgrade"</span>
+  <span class="at">title</span>=<span class="vl">"Google Maps — Nagpur"</span><span class="tg">&gt;
+&lt;/iframe&gt;</span></pre>
+    </div>
+  </div>
+
+  <!-- 02 OPENSTREETMAP -->
+  <div>
+    <div class="section-title"><span>02</span> Embedding OpenStreetMap</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+        <div class="url-bar">openstreetmap.org/export/embed.html — Nagpur</div>
+        <span class="tag tag-map">OSM Embed</span>
+      </div>
+      <div class="card-body">
+       <iframe width="951" height="535" src="https://www.youtube.com/embed/dG-SSbhlMdA" title="Unke Andaaz e Karam by Nusrat Fateh Ali Khan || Slowed &amp; Reverb Remix || Ethereal Rendition" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="code-wrap">
+      <div class="code-label">HTML Code</div>
+      <pre><span class="tg">&lt;iframe</span>
+  <span class="at">src</span>=<span class="vl">"https://www.openstreetmap.org/export/embed.html
+       ?bbox=78.9,21.0,79.2,21.3&amp;layer=mapnik&amp;marker=21.146,79.088"</span>
+  <span class="at">width</span>=<span class="vl">"100%"</span>  <span class="at">height</span>=<span class="vl">"380"</span>
+  <span class="at">loading</span>=<span class="vl">"lazy"</span>
+  <span class="at">title</span>=<span class="vl">"OpenStreetMap — Nagpur"</span><span class="tg">&gt;
+&lt;/iframe&gt;</span></pre>
+    </div>
+  </div>
+
+  <!-- 03 EXTERNAL PAGE -->
+  <div>
+    <div class="section-title"><span>03</span> Embedding an External Webpage</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+        <div class="url-bar">en.wikipedia.org/wiki/World_Wide_Web</div>
+        <span class="tag tag-ext">External Page</span>
+      </div>
+      <div class="card-body">
+        <iframe
+          src="https://en.wikipedia.org/wiki/World_Wide_Web"
+          height="480"
+          loading="lazy"
+          title="Wikipedia — World Wide Web"
+          sandbox="allow-scripts allow-same-origin allow-popups">
+        </iframe>
+      </div>
+    </div>
+    <div class="code-wrap">
+      <div class="code-label">HTML Code</div>
+      <pre><span class="tg">&lt;iframe</span>
+  <span class="at">src</span>=<span class="vl">"https://en.wikipedia.org/wiki/World_Wide_Web"</span>
+  <span class="at">width</span>=<span class="vl">"100%"</span>  <span class="at">height</span>=<span class="vl">"480"</span>
+  <span class="at">loading</span>=<span class="vl">"lazy"</span>
+  <span class="at">sandbox</span>=<span class="vl">"allow-scripts allow-same-origin allow-popups"</span>
+  <span class="at">title</span>=<span class="vl">"Wikipedia — World Wide Web"</span><span class="tg">&gt;
+&lt;/iframe&gt;</span></pre>
+    </div>
+  </div>
+
+  <!-- 04 SIDE BY SIDE -->
+  <div>
+    <div class="section-title"><span>04</span> Side-by-Side Layout (Modern Frameset Alternative)</div>
+    <div class="note" style="margin-bottom:0.8rem;">
+      <strong>Note:</strong> The old <code>&lt;frameset&gt;</code> and <code>&lt;frame&gt;</code> tags were removed in HTML5.
+      Modern practice uses <strong>&lt;iframe&gt; inside CSS Grid</strong> to achieve the same split-pane layout.
+    </div>
+    <div class="split">
+      <div class="card">
+        <div class="card-header">
+          <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+          <div class="url-bar">Left — Google Map</div>
+          <span class="tag tag-pane">Pane 1</span>
+        </div>
+        <div class="card-body">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236282.56399370553!2d78.88448!3d21.14631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c0a5a31faf13%3A0x19ca9f8e5165c0a1!2sNagpur%2C%20Maharashtra!5e0!3m2!1sen!2sin"
+            height="280"
+            allowfullscreen=""
+            loading="lazy"
+            title="Map Pane">
+          </iframe>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+          <div class="url-bar">Right — Wikipedia</div>
+          <span class="tag tag-pane">Pane 2</span>
+        </div>
+        <div class="card-body">
+          <iframe
+            src="https://en.wikipedia.org/wiki/Nagpur"
+            height="280"
+            loading="lazy"
+            title="Wikipedia Pane"
+            sandbox="allow-scripts allow-same-origin allow-popups">
+          </iframe>
+        </div>
+      </div>
+    </div>
+    <div class="code-wrap">
+      <div class="code-label">HTML + CSS Code</div>
+      <pre><span class="cm">/* CSS — replaces &lt;frameset cols="50%,50%"&gt; */</span>
+<span class="kw">.split-layout</span> {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+<span class="cm">&lt;!-- HTML --&gt;</span>
+<span class="tg">&lt;div</span> <span class="at">class</span>=<span class="vl">"split-layout"</span><span class="tg">&gt;</span>
+  <span class="tg">&lt;iframe</span> <span class="at">src</span>=<span class="vl">"map-url"</span>   <span class="at">height</span>=<span class="vl">"280"</span><span class="tg">&gt;&lt;/iframe&gt;</span>
+  <span class="tg">&lt;iframe</span> <span class="at">src</span>=<span class="vl">"page-url"</span>  <span class="at">height</span>=<span class="vl">"280"</span><span class="tg">&gt;&lt;/iframe&gt;</span>
+<span class="tg">&lt;/div&gt;</span></pre>
+    </div>
+  </div>
+
+  <!-- 05 REFERENCE TABLE -->
+  <div>
+    <div class="section-title"><span>05</span> iframe Attributes Reference</div>
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Attribute</th>
+            <th>Description</th>
+            <th>Example Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>src</td><td>URL of the page or resource to embed.</td><td>"https://example.com"</td></tr>
+          <tr><td>width / height</td><td>Dimensions of the iframe in pixels or %.</td><td>"100%" / "400"</td></tr>
+          <tr><td>title</td><td>Accessible label for screen readers. Always include.</td><td>"Google Map"</td></tr>
+          <tr><td>loading</td><td>Defers loading until needed (performance).</td><td>"lazy" | "eager"</td></tr>
+          <tr><td>sandbox</td><td>Restricts embedded content for security.</td><td>"allow-scripts"</td></tr>
+          <tr><td>allowfullscreen</td><td>Lets the frame expand to full screen.</td><td>(boolean)</td></tr>
+          <tr><td>referrerpolicy</td><td>Controls referrer header on requests.</td><td>"no-referrer-when-downgrade"</td></tr>
+          <tr><td>allow</td><td>Grants browser features to embedded content.</td><td>"geolocation; fullscreen"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  HTML Frames &amp; iFrames Lab &nbsp;·&nbsp; S.B. Jain Institute of Technology, Management &amp; Research &nbsp;·&nbsp; Web Designing Lab
+</footer>
+
+</body>
+</html>

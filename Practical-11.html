@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML5 APIs Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --warm-white: #ffffff;
+    --sand: #f0ebe0;
+    --taupe: #e8e0d0;
+    --stone: #c8b99a;
+    --mocha: #8b7355;
+    --bark: #5c4a32;
+    --ink: #2d2416;
+    --sage: #7a9e7e;
+    --sage-light: #e8f0e9;
+    --sky: #6a9bb5;
+    --sky-light: #e8f2f7;
+    --terra: #c4724a;
+    --terra-light: #faeee7;
+    --shadow-soft: 0 2px 16px rgba(92,74,50,0.08);
+    --shadow-card: 0 4px 32px rgba(92,74,50,0.1);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ─── Header ─── */
+  header {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--taupe);
+    padding: 28px 48px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--bark);
+    letter-spacing: -0.02em;
+  }
+
+  header span {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--stone);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ─── Layout ─── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* ─── Section Cards ─── */
+  .section {
+    background: var(--warm-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: 24px 32px 20px;
+    border-bottom: 1px solid var(--sand);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .icon-terra { background: var(--terra-light); }
+  .icon-sky   { background: var(--sky-light); }
+  .icon-sage  { background: var(--sage-light); }
+
+  .section-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--bark);
+  }
+
+  .section-header p {
+    font-size: 0.82rem;
+    color: var(--mocha);
+    margin-top: 2px;
+  }
+
+  .section-body { padding: 28px 32px 32px; }
+
+  /* ─── Badge / Tag ─── */
+  .api-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-left: auto;
+  }
+  .tag-terra { background: var(--terra-light); color: var(--terra); }
+  .tag-sky   { background: var(--sky-light);   color: var(--sky); }
+  .tag-sage  { background: var(--sage-light);  color: var(--sage); }
+
+  /* ═══════════════════════════════
+     1. DRAG & DROP
+  ═══════════════════════════════ */
+  .dnd-workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .dnd-column {
+    border: 1.5px dashed var(--taupe);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    min-height: 220px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .dnd-column.drag-over {
+    border-color: var(--terra);
+    background: var(--terra-light);
+  }
+
+  .dnd-column-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 12px;
+  }
+
+  .dnd-item {
+    background: var(--cream);
+    border: 1px solid var(--taupe);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    cursor: grab;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--bark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+
+  .dnd-item:hover {
+    box-shadow: var(--shadow-soft);
+    border-color: var(--stone);
+    transform: translateY(-1px);
+  }
+
+  .dnd-item.dragging {
+    opacity: 0.45;
+    cursor: grabbing;
+  }
+
+  .dnd-item .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--terra);
+    flex-shrink: 0;
+  }
+
+  .dnd-item.done .dot { background: var(--sage); }
+
+  .dnd-hint {
+    font-size: 0.8rem;
+    color: var(--stone);
+    text-align: center;
+    margin-top: 20px;
+    font-style: italic;
+  }
+
+  .dnd-reset-btn {
+    margin-top: 16px;
+    background: none;
+    border: 1px solid var(--taupe);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    color: var(--mocha);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .dnd-reset-btn:hover {
+    background: var(--sand);
+    border-color: var(--stone);
+  }
+
+  /* ═══════════════════════════════
+     2. GEOLOCATION
+  ═══════════════════════════════ */
+  .geo-panel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .geo-visual {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--sky-light);
+    border: 2px solid var(--taupe);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .geo-visual::before {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(106,155,181,0.1) 0%, transparent 70%);
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(0.8); opacity: 0.6; }
+    50%       { transform: scale(1.2); opacity: 1; }
+  }
+
+  .geo-visual.active::before {
+    background: radial-gradient(circle, rgba(122,158,126,0.2) 0%, transparent 70%);
+  }
+
+  .geo-icon { font-size: 2.4rem; position: relative; z-index: 1; }
+
+  .geo-status-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--sky);
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  .geo-status-label.got { color: var(--sage); }
+  .geo-status-label.err { color: var(--terra); }
+
+  .geo-right { flex: 1; }
+
+  .geo-data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .geo-card {
+    background: var(--cream);
+    border: 1px solid var(--taupe);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+  }
+
+  .geo-card-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stone);
+    margin-bottom: 4px;
+  }
+
+  .geo-card-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--bark);
+  }
+
+  .geo-card-value.placeholder { color: var(--taupe); font-size: 1rem; }
+
+  .geo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--sky);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 22px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .geo-btn:hover  { background: #5589a1; transform: translateY(-1px); }
+  .geo-btn:active { transform: translateY(0); }
+  .geo-btn:disabled { background: var(--stone); cursor: not-allowed; transform: none; }
+
+  .geo-message {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: var(--mocha);
+    min-height: 20px;
+  }
+
+  .geo-message.error { color: var(--terra); }
+
+  /* ═══════════════════════════════
+     3. WEB STORAGE
+  ═══════════════════════════════ */
+  .storage-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--sand);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 20px;
+    width: fit-content;
+  }
+
+  .storage-tab {
+    padding: 7px 18px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--mocha);
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .storage-tab.active {
+    background: white;
+    color: var(--bark);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .storage-pane { display: none; }
+  .storage-pane.active { display: block; }
+
+  .storage-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .storage-input {
+    flex: 1;
+    min-width: 120px;
+    border: 1.5px solid var(--taupe);
+    border-radius: var(--radius-sm);
+    padding: 9px 14px;
+    font-size: 0.88rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .storage-input:focus { border-color: var(--sage); }
+
+  .storage-btn {
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 9px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .storage-btn:hover  { transform: translateY(-1px); }
+  .storage-btn:active { transform: translateY(0); }
+  .btn-save   { background: var(--sage); color: white; }
+  .btn-save:hover   { background: #699b6d; }
+  .btn-clear  { background: var(--sand); color: var(--mocha); border: 1px solid var(--taupe); }
+  .btn-clear:hover  { background: var(--taupe); }
+
+  .storage-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .storage-table th {
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--taupe);
+  }
+
+  .storage-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--sand);
+    color: var(--bark);
+    word-break: break-all;
+  }
+
+  .storage-table tr:last-child td { border-bottom: none; }
+
+  .storage-table tr:hover td { background: var(--cream); }
+
+  .delete-btn {
+    background: none;
+    border: 1px solid var(--taupe);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    color: var(--terra);
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+  }
+
+  .delete-btn:hover { background: var(--terra-light); }
+
+  .storage-empty {
+    text-align: center;
+    padding: 32px;
+    color: var(--stone);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  .storage-type-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 12px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .badge-local   { background: var(--sage-light);  color: var(--sage); }
+  .badge-session { background: var(--sky-light);   color: var(--sky); }
+
+  /* ─── Footer note ─── */
+  .footnote {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--stone);
+    padding-bottom: 16px;
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 700px) {
+    header { padding: 20px 20px; }
+    main   { padding: 28px 14px 60px; }
+    .section-body { padding: 20px 18px 24px; }
+    .dnd-workspace { grid-template-columns: 1fr; }
+    .geo-panel { grid-template-columns: 1fr; }
+    .geo-visual { width: 100%; height: 90px; border-radius: 12px; flex-direction: row; }
+    .geo-data { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>HTML5 APIs</h1>
+  <span>Interactive Demonstration</span>
+</header>
+
+<main>
+
+  <!-- ════════════ SECTION 1: DRAG & DROP ════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-terra">🎯</div>
+      <div>
+        <h2>Drag &amp; Drop API</h2>
+        <p>Move items between columns using the native HTML5 drag-and-drop interface</p>
+      </div>
+      <span class="api-tag tag-terra">draggable</span>
+    </div>
+
+    <div class="section-body">
+      <div class="dnd-workspace">
+        <div class="dnd-column" id="col-todo"
+          ondragover="handleDragOver(event)"
+          ondragleave="handleDragLeave(event)"
+          ondrop="handleDrop(event, 'col-todo')">
+          <div class="dnd-column-label">📋 &nbsp; To Do</div>
+          <div class="dnd-item" draggable="true" ondragstart="handleDragStart(event)" data-id="t1"><span class="dot"></span>Design the layout</div>
+          <div class="dnd-item" draggable="true" ondragstart="handleDragStart(event)" data-id="t2"><span class="dot"></span>Write the HTML</div>
+          <div class="dnd-item" draggable="true" ondragstart="handleDragStart(event)" data-id="t3"><span class="dot"></span>Add CSS styles</div>
+        </div>
+
+        <div class="dnd-column" id="col-done"
+          ondragover="handleDragOver(event)"
+          ondragleave="handleDragLeave(event)"
+          ondrop="handleDrop(event, 'col-done')">
+          <div class="dnd-column-label">✅ &nbsp; Done</div>
+          <div class="dnd-item done" draggable="true" ondragstart="handleDragStart(event)" data-id="d1"><span class="dot"></span>Plan the project</div>
+        </div>
+      </div>
+
+      <p class="dnd-hint">Drag items between columns · <code>dragstart</code>, <code>dragover</code>, <code>drop</code> events</p>
+      <button class="dnd-reset-btn" onclick="resetDnD()">↺ Reset</button>
+    </div>
+  </section>
+
+  <!-- ════════════ SECTION 2: GEOLOCATION ════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-sky">📍</div>
+      <div>
+        <h2>Geolocation API</h2>
+        <p>Access the device's geographic position via the browser permission system</p>
+      </div>
+      <span class="api-tag tag-sky">navigator.geolocation</span>
+    </div>
+
+    <div class="section-body">
+      <div class="geo-panel">
+        <div class="geo-visual" id="geo-visual">
+          <span class="geo-icon">🌐</span>
+          <span class="geo-status-label" id="geo-status-label">Idle</span>
+        </div>
+
+        <div class="geo-right">
+          <div class="geo-data">
+            <div class="geo-card">
+              <div class="geo-card-label">Latitude</div>
+              <div class="geo-card-value placeholder" id="geo-lat">—</div>
+            </div>
+            <div class="geo-card">
+              <div class="geo-card-label">Longitude</div>
+              <div class="geo-card-value placeholder" id="geo-lon">—</div>
+            </div>
+            <div class="geo-card">
+              <div class="geo-card-label">Accuracy</div>
+              <div class="geo-card-value placeholder" id="geo-acc">—</div>
+            </div>
+            <div class="geo-card">
+              <div class="geo-card-label">Timestamp</div>
+              <div class="geo-card-value placeholder" id="geo-time">—</div>
+            </div>
+          </div>
+
+          <button class="geo-btn" id="geo-btn" onclick="getLocation()">
+            <span>📡</span> Get My Location
+          </button>
+          <div class="geo-message" id="geo-message">Click the button to request location access.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ SECTION 3: WEB STORAGE ════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon icon-sage">🗄️</div>
+      <div>
+        <h2>Web Storage API</h2>
+        <p>Persist key-value data in localStorage (permanent) and sessionStorage (tab-scoped)</p>
+      </div>
+      <span class="api-tag tag-sage">localStorage · sessionStorage</span>
+    </div>
+
+    <div class="section-body">
+      <div class="storage-tabs">
+        <button class="storage-tab active" onclick="switchTab('local')">
+          localStorage <span class="storage-type-badge badge-local">Persistent</span>
+        </button>
+        <button class="storage-tab" onclick="switchTab('session')">
+          sessionStorage <span class="storage-type-badge badge-session">Session</span>
+        </button>
+      </div>
+
+      <!-- localStorage pane -->
+      <div class="storage-pane active" id="pane-local">
+        <div class="storage-form">
+          <input class="storage-input" id="local-key"   placeholder="Key"   />
+          <input class="storage-input" id="local-value" placeholder="Value" />
+          <button class="storage-btn btn-save"  onclick="saveItem('local')">Save</button>
+          <button class="storage-btn btn-clear" onclick="clearAll('local')">Clear All</button>
+        </div>
+        <div id="local-table"></div>
+      </div>
+
+      <!-- sessionStorage pane -->
+      <div class="storage-pane" id="pane-session">
+        <div class="storage-form">
+          <input class="storage-input" id="session-key"   placeholder="Key"   />
+          <input class="storage-input" id="session-value" placeholder="Value" />
+          <button class="storage-btn btn-save"  onclick="saveItem('session')">Save</button>
+          <button class="storage-btn btn-clear" onclick="clearAll('session')">Clear All</button>
+        </div>
+        <div id="session-table"></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="footnote">Built with HTML5 Drag &amp; Drop API · Geolocation API · Web Storage API &nbsp;·&nbsp; S.B. Jain Institute — Web Designing Lab</p>
+</main>
+
+<script>
+/* ───────────────────────────
+   DRAG & DROP
+─────────────────────────── */
+let draggedEl = null;
+
+const initialDnD = {
+  'col-todo': ['t1','t2','t3'],
+  'col-done': ['d1']
+};
+const itemData = {
+  t1: { text: 'Design the layout', done: false },
+  t2: { text: 'Write the HTML',    done: false },
+  t3: { text: 'Add CSS styles',    done: false },
+  d1: { text: 'Plan the project',  done: true  }
+};
+
+function makeItem(id) {
+  const d = itemData[id];
+  const el = document.createElement('div');
+  el.className = 'dnd-item' + (d.done ? ' done' : '');
+  el.draggable = true;
+  el.dataset.id = id;
+  el.innerHTML = `<span class="dot"></span>${d.text}`;
+  el.ondragstart = handleDragStart;
+  return el;
+}
+
+function handleDragStart(e) {
+  draggedEl = e.currentTarget;
+  draggedEl.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', draggedEl.dataset.id);
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+
+function handleDrop(e, colId) {
+  e.preventDefault();
+  const col = document.getElementById(colId);
+  col.classList.remove('drag-over');
+  if (draggedEl) {
+    draggedEl.classList.remove('dragging');
+    // Update done state based on column
+    if (colId === 'col-done') draggedEl.classList.add('done');
+    else draggedEl.classList.remove('done');
+    draggedEl.querySelector('.dot').style.background = colId === 'col-done' ? '' : '';
+    col.appendChild(draggedEl);
+    draggedEl = null;
+  }
+}
+
+document.querySelectorAll('.dnd-item').forEach(el => {
+  el.addEventListener('dragend', () => {
+    el.classList.remove('dragging');
+    document.querySelectorAll('.dnd-column').forEach(c => c.classList.remove('drag-over'));
+  });
+});
+
+function resetDnD() {
+  const todo = document.getElementById('col-todo');
+  const done = document.getElementById('col-done');
+  // Clear items (keep label)
+  [...todo.querySelectorAll('.dnd-item')].forEach(el => el.remove());
+  [...done.querySelectorAll('.dnd-item')].forEach(el => el.remove());
+  initialDnD['col-todo'].forEach(id => todo.appendChild(makeItem(id)));
+  initialDnD['col-done'].forEach(id => done.appendChild(makeItem(id)));
+}
+
+/* ───────────────────────────
+   GEOLOCATION
+─────────────────────────── */
+function getLocation() {
+  if (!('geolocation' in navigator)) {
+    showGeoMsg('Geolocation is not supported by this browser.', true);
+    return;
+  }
+  const btn = document.getElementById('geo-btn');
+  btn.disabled = true;
+  setGeoStatus('Fetching…', false, '🔄');
+  showGeoMsg('Requesting location permission…');
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const { latitude, longitude, accuracy } = pos.coords;
+      document.getElementById('geo-lat').textContent  = latitude.toFixed(6) + '°';
+      document.getElementById('geo-lon').textContent  = longitude.toFixed(6) + '°';
+      document.getElementById('geo-acc').textContent  = Math.round(accuracy) + ' m';
+      document.getElementById('geo-time').textContent = new Date(pos.timestamp).toLocaleTimeString();
+      document.getElementById('geo-lat').classList.remove('placeholder');
+      document.getElementById('geo-lon').classList.remove('placeholder');
+      document.getElementById('geo-acc').classList.remove('placeholder');
+      document.getElementById('geo-time').classList.remove('placeholder');
+      setGeoStatus('Located', true, '📍');
+      showGeoMsg('✓ Location retrieved successfully.');
+      btn.disabled = false;
+      btn.innerHTML = '<span>🔄</span> Refresh Location';
+    },
+    err => {
+      const msgs = {
+        1: 'Permission denied. Please allow location access.',
+        2: 'Position unavailable. Could not determine location.',
+        3: 'Request timed out. Please try again.'
+      };
+      setGeoStatus('Error', false, '⚠️', true);
+      showGeoMsg(msgs[err.code] || 'Unknown error.', true);
+      btn.disabled = false;
+    },
+    { timeout: 10000 }
+  );
+}
+
+function setGeoStatus(label, success, icon, error) {
+  const visual = document.getElementById('geo-visual');
+  const lbl    = document.getElementById('geo-status-label');
+  document.querySelector('.geo-icon').textContent = icon || '🌐';
+  lbl.textContent = label;
+  lbl.className = 'geo-status-label' + (success ? ' got' : error ? ' err' : '');
+  if (success) visual.classList.add('active');
+}
+
+function showGeoMsg(text, isErr) {
+  const el = document.getElementById('geo-message');
+  el.textContent = text;
+  el.className = 'geo-message' + (isErr ? ' error' : '');
+}
+
+/* ───────────────────────────
+   WEB STORAGE
+─────────────────────────── */
+let activeTab = 'local';
+
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.storage-tab').forEach((t, i) => {
+    t.classList.toggle('active', (i === 0 && tab === 'local') || (i === 1 && tab === 'session'));
+  });
+  document.getElementById('pane-local').classList.toggle('active', tab === 'local');
+  document.getElementById('pane-session').classList.toggle('active', tab === 'session');
+  renderTable(tab);
+}
+
+function getStore(tab) {
+  return tab === 'local' ? localStorage : sessionStorage;
+}
+
+function saveItem(tab) {
+  const key   = document.getElementById(tab + '-key').value.trim();
+  const value = document.getElementById(tab + '-value').value.trim();
+  if (!key) return;
+  getStore(tab).setItem(key, value);
+  document.getElementById(tab + '-key').value   = '';
+  document.getElementById(tab + '-value').value = '';
+  renderTable(tab);
+}
+
+function deleteItem(tab, key) {
+  getStore(tab).removeItem(key);
+  renderTable(tab);
+}
+
+function clearAll(tab) {
+  getStore(tab).clear();
+  renderTable(tab);
+}
+
+function renderTable(tab) {
+  const store = getStore(tab);
+  const container = document.getElementById(tab + '-table');
+  if (store.length === 0) {
+    container.innerHTML = '<div class="storage-empty">No entries yet. Add a key-value pair above.</div>';
+    return;
+  }
+  let rows = '';
+  for (let i = 0; i < store.length; i++) {
+    const k = store.key(i);
+    const v = store.getItem(k);
+    rows += `<tr>
+      <td>${escHtml(k)}</td>
+      <td>${escHtml(v)}</td>
+      <td><button class="delete-btn" onclick="deleteItem('${tab}','${escHtml(k)}')">Remove</button></td>
+    </tr>`;
+  }
+  container.innerHTML = `
+    <table class="storage-table">
+      <thead><tr><th>Key</th><th>Value</th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+// Init storage tables & seed sample data
+(function init() {
+  if (!localStorage.getItem('demo-name')) {
+    localStorage.setItem('demo-name', 'Shreyash');
+    localStorage.setItem('demo-theme', 'light');
+  }
+  if (!sessionStorage.getItem('session-visits')) {
+    sessionStorage.setItem('session-visits', '1');
+  } else {
+    sessionStorage.setItem('session-visits', String(Number(sessionStorage.getItem('session-visits')) + 1));
+  }
+  renderTable('local');
+  renderTable('session');
+})();
+</script>
+</body>
+</html>

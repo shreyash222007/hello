@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DesignStudio — Bootstrap Mini Website</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --cream: #faf8f4;
+      --warm-white: #ffffff;
+      --blush: #f2e8df;
+      --sage: #d4e4d8;
+      --sky: #ddeaf5;
+      --accent: #b5856a;
+      --accent-dark: #9a6d54;
+      --text-dark: #2c2825;
+      --text-mid: #5c554e;
+      --text-light: #9b9087;
+      --border: #e8e1d8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--text-dark);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+    }
+
+    /* ── NAVBAR ────────────────────────────── */
+    .navbar {
+      background: var(--warm-white) !important;
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+
+    .navbar-brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--text-dark) !important;
+      letter-spacing: -0.5px;
+    }
+
+    .navbar-brand span { color: var(--accent); }
+
+    .nav-link {
+      color: var(--text-mid) !important;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      padding: 0.4rem 0.85rem !important;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--text-dark) !important;
+      background: var(--blush);
+    }
+
+    /* Dropdown */
+    .dropdown-menu {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.5rem;
+      box-shadow: 0 8px 30px rgba(44,40,37,0.1);
+      background: var(--warm-white);
+    }
+
+    .dropdown-item {
+      border-radius: 8px;
+      font-size: 0.875rem;
+      padding: 0.5rem 0.85rem;
+      color: var(--text-mid);
+      font-weight: 500;
+    }
+
+    .dropdown-item:hover {
+      background: var(--blush);
+      color: var(--text-dark);
+    }
+
+    .dropdown-divider { border-color: var(--border); }
+
+    .btn-nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem !important;
+      transition: background 0.2s;
+    }
+
+    .btn-nav-cta:hover { background: var(--accent-dark) !important; color: #fff !important; }
+
+    /* ── BREADCRUMB ────────────────────────── */
+    .breadcrumb-wrap {
+      background: var(--blush);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 0;
+    }
+
+    .breadcrumb { margin: 0; font-size: 0.82rem; }
+
+    .breadcrumb-item a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .breadcrumb-item a:hover { text-decoration: underline; }
+    .breadcrumb-item.active { color: var(--text-light); }
+    .breadcrumb-item + .breadcrumb-item::before { color: var(--text-light); }
+
+    /* ── HERO ──────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--blush) 0%, var(--sky) 100%);
+      padding: 5rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      background: rgba(181,133,106,0.08);
+      border-radius: 50%;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--warm-white);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--border);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.15;
+      color: var(--text-dark);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 em { color: var(--accent); font-style: italic; }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary-custom {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary-custom:hover {
+      background: var(--accent-dark);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline-custom {
+      background: transparent;
+      color: var(--text-dark);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-outline-custom:hover {
+      background: var(--warm-white);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 12px 40px rgba(44,40,37,0.07);
+    }
+
+    .hero-stat { text-align: center; padding: 0.75rem; }
+    .hero-stat .num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+    }
+    .hero-stat .label { font-size: 0.8rem; color: var(--text-light); font-weight: 500; }
+
+    /* ── SERVICES SECTION ──────────────────── */
+    .section { padding: 4.5rem 0; }
+    .section-alt { background: var(--warm-white); }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+      color: var(--text-dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-sub {
+      color: var(--text-mid);
+      font-size: 0.95rem;
+      max-width: 520px;
+    }
+
+    .service-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      height: 100%;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+
+    .section-alt .service-card { background: var(--cream); }
+
+    .service-card:hover {
+      box-shadow: 0 10px 36px rgba(44,40,37,0.1);
+      transform: translateY(-3px);
+    }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .icon-blush { background: var(--blush); color: var(--accent); }
+    .icon-sage  { background: var(--sage);  color: #5a8060; }
+    .icon-sky   { background: var(--sky);   color: #4d7fa8; }
+
+    .service-card h5 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .service-card p  { font-size: 0.875rem; color: var(--text-mid); margin: 0; }
+
+    /* ── TEAM CARDS ────────────────────────── */
+    .team-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: box-shadow 0.25s;
+    }
+
+    .team-card:hover { box-shadow: 0 8px 28px rgba(44,40,37,0.09); }
+
+    .team-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      margin: 0 auto 1rem;
+      border: 2px solid var(--border);
+    }
+
+    .avatar-a { background: var(--blush); color: var(--accent); }
+    .avatar-b { background: var(--sage);  color: #5a8060; }
+    .avatar-c { background: var(--sky);   color: #4d7fa8; }
+
+    .team-card h6 { font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .team-card span { font-size: 0.8rem; color: var(--text-light); }
+
+    /* ── CONTACT FORM ──────────────────────── */
+    .form-wrap {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+    }
+
+    .form-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-mid);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-control, .form-select {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.9rem;
+      background: var(--cream);
+      color: var(--text-dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(181,133,106,0.15);
+      background: var(--warm-white);
+      outline: none;
+    }
+
+    .form-check-input:checked {
+      background-color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    textarea.form-control { resize: vertical; min-height: 110px; }
+
+    /* ── MODAL ─────────────────────────────── */
+    .modal-content {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      background: var(--blush);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .modal-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--text-dark);
+    }
+
+    .modal-body { padding: 1.5rem; background: var(--warm-white); }
+    .modal-footer { background: var(--cream); border-top: 1px solid var(--border); padding: 1rem 1.5rem; }
+
+    /* ── FOOTER ────────────────────────────── */
+    footer {
+      background: var(--text-dark);
+      color: rgba(255,255,255,0.6);
+      padding: 3rem 0 1.5rem;
+    }
+
+    footer .brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+
+    footer .brand span { color: var(--accent); }
+
+    footer p { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+
+    .footer-link {
+      display: block;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      margin-bottom: 0.4rem;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--accent); }
+
+    footer h6 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-divider {
+      border-color: rgba(255,255,255,0.08);
+      margin: 2rem 0 1rem;
+    }
+
+    .footer-bottom { font-size: 0.8rem; }
+
+    /* ── RESPONSIVE TWEAKS ─────────────────── */
+    @media (max-width: 768px) {
+      .hero { padding: 3.5rem 0 3rem; }
+      .hero-card { margin-top: 2.5rem; }
+      .form-wrap { padding: 1.75rem; }
+    }
+
+    @media (max-width: 576px) {
+      .hero { padding: 2.5rem 0 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Design<span>Studio</span></a>
+
+    <button class="navbar-toggler border-0" type="button"
+            data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-list fs-4" style="color:var(--text-dark)"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1 mt-3 mt-lg-0">
+        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+
+        <!-- DROPDOWN -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            Resources
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="bi bi-book me-2 text-muted"></i>Documentation
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="bi bi-play-circle me-2 text-muted"></i>Tutorials
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="bi bi-palette me-2 text-muted"></i>Design Templates
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="bi bi-chat-dots me-2 text-muted"></i>Community Forum
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item ms-lg-2">
+          <a class="nav-link btn-nav-cta" href="#contact">Get Started</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     BREADCRUMB
+════════════════════════════════════════ -->
+<div class="breadcrumb-wrap">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><i class="bi bi-house-door me-1"></i>Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Portfolio</a></li>
+        <li class="breadcrumb-item"><a href="#">Web Design</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Bootstrap Showcase</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="hero-badge"><i class="bi bi-stars me-1"></i>New — Bootstrap 5 Showcase</div>
+        <h1>Craft beautiful <em>digital experiences</em> that inspire</h1>
+        <p>We blend strategy, design, and technology to help brands stand out and connect meaningfully with their audience.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#projectModal">
+            <i class="bi bi-rocket-takeoff me-2"></i>Start a Project
+          </button>
+          <a href="#services" class="btn btn-outline-custom">
+            <i class="bi bi-grid me-2"></i>Our Services
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="hero-card">
+          <p class="mb-3" style="font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-light)">Studio at a Glance</p>
+          <div class="row g-2 text-center">
+            <div class="col-4 hero-stat">
+              <div class="num">120+</div>
+              <div class="label">Projects</div>
+            </div>
+            <div class="col-4 hero-stat" style="border-left:1px solid var(--border);border-right:1px solid var(--border)">
+              <div class="num">98%</div>
+              <div class="label">Satisfaction</div>
+            </div>
+            <div class="col-4 hero-stat">
+              <div class="num">8 yrs</div>
+              <div class="label">Experience</div>
+            </div>
+          </div>
+          <hr style="border-color:var(--border);margin:1.25rem 0;">
+          <div class="d-flex align-items-center gap-2">
+            <div class="d-flex">
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--blush);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:.8rem;color:var(--accent)">A</div>
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--sage);border:2px solid #fff;margin-left:-8px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:.8rem;color:#5a8060">B</div>
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--sky);border:2px solid #fff;margin-left:-8px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:.8rem;color:#4d7fa8">C</div>
+            </div>
+            <span style="font-size:0.82rem;color:var(--text-mid)">Trusted by <strong style="color:var(--text-dark)">50+ clients</strong> worldwide</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     SERVICES
+════════════════════════════════════════ -->
+<section class="section section-alt" id="services">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-7">
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">End-to-end creative services</h2>
+        <p class="section-sub">From brand identity to full-stack development, we've got every corner of your digital presence covered.</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon icon-blush"><i class="bi bi-brush"></i></div>
+          <h5>UI / UX Design</h5>
+          <p>Research-driven interfaces that are both beautiful and effortlessly usable.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon icon-sage"><i class="bi bi-code-slash"></i></div>
+          <h5>Web Development</h5>
+          <p>Clean, performant code built with modern frameworks and best practices.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon icon-sky"><i class="bi bi-phone"></i></div>
+          <h5>Mobile-First Design</h5>
+          <p>Responsive layouts that work beautifully across every screen and device.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon icon-blush"><i class="bi bi-bar-chart-line"></i></div>
+          <h5>Brand Strategy</h5>
+          <p>Positioning, messaging, and visual identity that resonates and lasts.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon icon-sage"><i class="bi bi-search"></i></div>
+          <h5>SEO & Performance</h5>
+          <p>Optimized for speed, accessibility, and search engine visibility.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon icon-sky"><i class="bi bi-cloud-arrow-up"></i></div>
+          <h5>Cloud & Hosting</h5>
+          <p>Scalable infrastructure setup with monitoring and ongoing support.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     TEAM
+════════════════════════════════════════ -->
+<section class="section" id="team">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-6">
+        <div class="section-label">The People</div>
+        <h2 class="section-title">Meet our creative team</h2>
+        <p class="section-sub">A small but mighty group of designers, developers, and strategists.</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="team-card">
+          <div class="team-avatar avatar-a">A</div>
+          <h6>Aanya Sharma</h6>
+          <span>Creative Director</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="team-card">
+          <div class="team-avatar avatar-b">B</div>
+          <h6>Ben Nguyen</h6>
+          <span>Lead Developer</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="team-card">
+          <div class="team-avatar avatar-c">C</div>
+          <h6>Clara Dubois</h6>
+          <span>UX Researcher</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="team-card">
+          <div class="team-avatar avatar-a">D</div>
+          <h6>Dev Patel</h6>
+          <span>Brand Strategist</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     CONTACT FORM
+════════════════════════════════════════ -->
+<section class="section section-alt" id="contact">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="text-center mb-4">
+          <div class="section-label">Reach Out</div>
+          <h2 class="section-title">Let's start a conversation</h2>
+          <p class="section-sub mx-auto">Tell us about your project and we'll get back to you within one business day.</p>
+        </div>
+
+        <div class="form-wrap">
+          <!-- Success alert (hidden by default) -->
+          <div class="alert alert-success d-none align-items-center gap-2 mb-4" id="formSuccess" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Message sent! We'll be in touch soon.</span>
+          </div>
+
+          <form id="contactForm" novalidate>
+            <!-- Row 1 -->
+            <div class="row g-3 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="firstName">First Name *</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Aanya" required />
+                <div class="invalid-feedback">Please enter your first name.</div>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="lastName">Last Name *</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Sharma" required />
+                <div class="invalid-feedback">Please enter your last name.</div>
+              </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="row g-3 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="email">Email Address *</label>
+                <input type="email" class="form-control" id="email" placeholder="you@example.com" required />
+                <div class="invalid-feedback">Please enter a valid email.</div>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="phone">Phone (optional)</label>
+                <input type="tel" class="form-control" id="phone" placeholder="+91 98765 43210" />
+              </div>
+            </div>
+
+            <!-- Service Select -->
+            <div class="mb-3">
+              <label class="form-label" for="service">Service Interested In *</label>
+              <select class="form-select" id="service" required>
+                <option value="" disabled selected>Select a service…</option>
+                <option>UI / UX Design</option>
+                <option>Web Development</option>
+                <option>Mobile-First Design</option>
+                <option>Brand Strategy</option>
+                <option>SEO & Performance</option>
+                <option>Cloud & Hosting</option>
+              </select>
+              <div class="invalid-feedback">Please select a service.</div>
+            </div>
+
+            <!-- Budget Radio -->
+            <div class="mb-3">
+              <label class="form-label d-block">Budget Range *</label>
+              <div class="d-flex flex-wrap gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="budget" id="bud1" value="under5k" required>
+                  <label class="form-check-label" for="bud1" style="font-size:.875rem">Under ₹5k</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="budget" id="bud2" value="5k-20k">
+                  <label class="form-check-label" for="bud2" style="font-size:.875rem">₹5k – ₹20k</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="budget" id="bud3" value="20k+">
+                  <label class="form-check-label" for="bud3" style="font-size:.875rem">₹20k+</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Message -->
+            <div class="mb-3">
+              <label class="form-label" for="message">Message *</label>
+              <textarea class="form-control" id="message" placeholder="Tell us about your project…" required></textarea>
+              <div class="invalid-feedback">Please write a brief message.</div>
+            </div>
+
+            <!-- Checkbox -->
+            <div class="mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="newsletter">
+                <label class="form-check-label" for="newsletter" style="font-size:.875rem;color:var(--text-mid)">
+                  Subscribe to our newsletter for design tips and studio updates
+                </label>
+              </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-3 align-items-center">
+              <button type="submit" class="btn btn-primary-custom px-4">
+                <i class="bi bi-send me-2"></i>Send Message
+              </button>
+              <button type="button" class="btn btn-outline-custom" data-bs-toggle="modal" data-bs-target="#infoModal">
+                <i class="bi bi-info-circle me-2"></i>What happens next?
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MODAL — Start a Project
+════════════════════════════════════════ -->
+<div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="projectModalLabel"><i class="bi bi-rocket-takeoff me-2" style="color:var(--accent)"></i>Start a New Project</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--text-mid);font-size:.9rem;margin-bottom:1.25rem">Let's kick things off. Choose how you'd like to begin:</p>
+        <div class="d-grid gap-2">
+          <button class="btn" style="border:1.5px solid var(--border);border-radius:10px;text-align:left;padding:.75rem 1rem;background:var(--cream)" data-bs-dismiss="modal" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            <div class="fw-600" style="font-weight:600;font-size:.9rem"><i class="bi bi-pencil-square me-2" style="color:var(--accent)"></i>Fill out our project form</div>
+            <div style="font-size:.8rem;color:var(--text-light);margin-left:1.75rem">Best for detailed briefs</div>
+          </button>
+          <button class="btn" style="border:1.5px solid var(--border);border-radius:10px;text-align:left;padding:.75rem 1rem;background:var(--cream)">
+            <div class="fw-600" style="font-weight:600;font-size:.9rem"><i class="bi bi-calendar-check me-2" style="color:var(--accent)"></i>Book a discovery call</div>
+            <div style="font-size:.8rem;color:var(--text-light);margin-left:1.75rem">30-minute free consultation</div>
+          </button>
+          <button class="btn" style="border:1.5px solid var(--border);border-radius:10px;text-align:left;padding:.75rem 1rem;background:var(--cream)">
+            <div class="fw-600" style="font-weight:600;font-size:.9rem"><i class="bi bi-file-earmark-pdf me-2" style="color:var(--accent)"></i>Download our brochure</div>
+            <div style="font-size:.8rem;color:var(--text-light);margin-left:1.75rem">Overview of services & pricing</div>
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-custom btn-sm" data-bs-dismiss="modal">Maybe later</button>
+        <button type="button" class="btn btn-primary-custom btn-sm" data-bs-dismiss="modal">Let's go →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MODAL — What happens next
+════════════════════════════════════════ -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLabel"><i class="bi bi-info-circle me-2" style="color:var(--accent)"></i>What happens after you submit?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-column gap-3">
+          <div class="d-flex gap-3">
+            <div style="width:32px;height:32px;min-width:32px;border-radius:50%;background:var(--blush);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;color:var(--accent)">1</div>
+            <div>
+              <div style="font-weight:600;font-size:.9rem;margin-bottom:.15rem">We review your brief</div>
+              <div style="font-size:.82rem;color:var(--text-mid)">Our team reads every submission carefully, usually within a few hours.</div>
+            </div>
+          </div>
+          <div class="d-flex gap-3">
+            <div style="width:32px;height:32px;min-width:32px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;color:#5a8060">2</div>
+            <div>
+              <div style="font-weight:600;font-size:.9rem;margin-bottom:.15rem">We reach out within 1 business day</div>
+              <div style="font-size:.82rem;color:var(--text-mid)">Expect an email with initial thoughts and a proposed next step.</div>
+            </div>
+          </div>
+          <div class="d-flex gap-3">
+            <div style="width:32px;height:32px;min-width:32px;border-radius:50%;background:var(--sky);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;color:#4d7fa8">3</div>
+            <div>
+              <div style="font-weight:600;font-size:.9rem;margin-bottom:.15rem">Discovery call & proposal</div>
+              <div style="font-size:.82rem;color:var(--text-mid)">A short call to align on goals, then we deliver a tailored proposal.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary-custom btn-sm" data-bs-dismiss="modal">Got it, thanks!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="brand">Design<span>Studio</span></div>
+        <p>A boutique creative studio building digital experiences since 2017.</p>
+      </div>
+      <div class="col-6 col-md-3 col-lg-2 offset-lg-2">
+        <h6>Company</h6>
+        <a class="footer-link" href="#">About Us</a>
+        <a class="footer-link" href="#">Careers</a>
+        <a class="footer-link" href="#">Press Kit</a>
+        <a class="footer-link" href="#">Blog</a>
+      </div>
+      <div class="col-6 col-md-3 col-lg-2">
+        <h6>Services</h6>
+        <a class="footer-link" href="#">UI Design</a>
+        <a class="footer-link" href="#">Development</a>
+        <a class="footer-link" href="#">Strategy</a>
+        <a class="footer-link" href="#">SEO</a>
+      </div>
+      <div class="col-6 col-md-3 col-lg-2">
+        <h6>Follow</h6>
+        <a class="footer-link" href="#"><i class="bi bi-instagram me-2"></i>Instagram</a>
+        <a class="footer-link" href="#"><i class="bi bi-twitter me-2"></i>Twitter</a>
+        <a class="footer-link" href="#"><i class="bi bi-linkedin me-2"></i>LinkedIn</a>
+        <a class="footer-link" href="#"><i class="bi bi-dribbble me-2"></i>Dribbble</a>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom d-flex flex-wrap justify-content-between gap-2">
+      <span>© 2025 DesignStudio. All rights reserved.</span>
+      <span>
+        <a href="#" style="color:rgba(255,255,255,.35);text-decoration:none;margin-right:1rem">Privacy</a>
+        <a href="#" style="color:rgba(255,255,255,.35);text-decoration:none">Terms</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Form validation
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!this.checkValidity()) {
+      this.classList.add('was-validated');
+      return;
+    }
+    // Show success, hide form
+    this.classList.add('d-none');
+    document.getElementById('formSuccess').classList.remove('d-none');
+    document.getElementById('formSuccess').classList.add('d-flex');
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CSS3 Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    /* ── CSS VARIABLES ─────────────────────────────── */
+    :root {
+      --ink:     #0d0d0d;
+      --paper:   #f5f0e8;
+      --cream:   #ede7d5;
+      --rust:    #c0391b;
+      --gold:    #d4a021;
+      --teal:    #1a7a6e;
+      --muted:   #7a7060;
+      --col-gap: clamp(1rem, 3vw, 2.5rem);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* ── RESET & BASE ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATED HERO ─────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: var(--ink);
+      overflow: hidden;
+    }
+
+    /* diagonal stripe background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent 0px,
+        transparent 28px,
+        rgba(255,255,255,.03) 28px,
+        rgba(255,255,255,.03) 30px
+      );
+    }
+
+    /* pulsing accent circle */
+    .hero__blob {
+      position: absolute;
+      width: clamp(260px, 50vw, 600px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 40%, var(--rust) 0%, var(--gold) 55%, transparent 75%);
+      opacity: .18;
+      animation: blobDrift 12s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes blobDrift {
+      from { transform: translate(-10%, -8%) scale(1);   }
+      to   { transform: translate( 12%,  10%) scale(1.18); }
+    }
+
+    .hero__content {
+      position: relative;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero__eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(.65rem, 1.5vw, .85rem);
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      animation: fadeDown .8s var(--ease-spring) .1s both;
+    }
+
+    .hero__title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 10vw, 8.5rem);
+      font-weight: 900;
+      line-height: .95;
+      color: var(--paper);
+      animation: fadeDown .9s var(--ease-spring) .25s both;
+    }
+
+    .hero__title em {
+      font-style: italic;
+      color: var(--rust);
+      display: inline-block;
+      animation: tiltIn 1s var(--ease-spring) .6s both;
+    }
+
+    .hero__sub {
+      margin-top: 1.5rem;
+      font-size: clamp(.75rem, 1.8vw, 1rem);
+      color: var(--muted);
+      max-width: 38ch;
+      margin-inline: auto;
+      animation: fadeUp .9s ease .7s both;
+    }
+
+    .hero__scroll {
+      margin-top: 3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      color: var(--gold);
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      animation: fadeUp .9s ease .9s both, nudgeDown 2s ease-in-out 2s infinite;
+    }
+
+    @keyframes fadeDown  { from { opacity:0; transform:translateY(-24px); } to { opacity:1; transform:none; } }
+    @keyframes fadeUp    { from { opacity:0; transform:translateY( 24px); } to { opacity:1; transform:none; } }
+    @keyframes tiltIn    { from { opacity:0; transform:rotate(-8deg) scale(.8); } to { opacity:1; transform:none; } }
+    @keyframes nudgeDown { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
+
+    /* ── SECTION SHARED ────────────────────────────── */
+    section {
+      padding: clamp(3rem, 8vw, 7rem) clamp(1.2rem, 5vw, 6rem);
+    }
+
+    .section-label {
+      font-size: .7rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: .6rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── MULTI-COLUMN TEXT ─────────────────────────── */
+    .columns-section { background: var(--cream); }
+
+    .columns-section p {
+      font-size: clamp(.82rem, 1.6vw, 1rem);
+      line-height: 1.85;
+      color: #333;
+      column-count: 3;
+      column-gap: var(--col-gap);
+      column-rule: 1px solid #ccc4b0;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    @media (max-width: 768px) {
+      .columns-section p { column-count: 2; }
+    }
+    @media (max-width: 480px) {
+      .columns-section p { column-count: 1; }
+    }
+
+    /* ── ICONS GRID ────────────────────────────────── */
+    .icons-section { background: var(--paper); }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .icon-card {
+      background: var(--cream);
+      border: 1px solid #ddd5c2;
+      border-radius: 8px;
+      padding: 1.8rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .3s var(--ease-spring), box-shadow .3s ease, background .3s;
+    }
+
+    .icon-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 16px 40px rgba(0,0,0,.12);
+      background: var(--ink);
+      color: var(--paper);
+      border-color: transparent;
+    }
+
+    .icon-card i {
+      font-size: 2rem;
+      color: var(--rust);
+      transition: color .3s, transform .4s var(--ease-spring);
+    }
+
+    .icon-card:hover i {
+      color: var(--gold);
+      transform: rotate(10deg) scale(1.2);
+    }
+
+    .icon-card span {
+      display: block;
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-top: .7rem;
+      color: var(--muted);
+      transition: color .3s;
+    }
+
+    .icon-card:hover span { color: var(--cream); }
+
+    /* ── TRANSFORMATIONS DEMO ──────────────────────── */
+    .transforms-section { background: var(--ink); color: var(--paper); }
+    .transforms-section h2 { color: var(--paper); }
+    .transforms-section .section-label { color: var(--gold); }
+
+    .transform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .t-box {
+      height: 160px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,.1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .t-box span { position: relative; z-index: 1; color: var(--paper); }
+
+    /* individual hover transforms */
+    .t-box--rotate    { background: #1e1a2e; transition: transform .5s var(--ease-spring); }
+    .t-box--rotate:hover { transform: rotate(12deg); }
+
+    .t-box--scale     { background: #1a2e1e; transition: transform .4s var(--ease-spring); }
+    .t-box--scale:hover  { transform: scale(1.15); }
+
+    .t-box--skew      { background: #2e1a1a; transition: transform .4s ease; }
+    .t-box--skew:hover   { transform: skewX(-10deg) skewY(-4deg); }
+
+    .t-box--flip      { background: #1a2530; transition: transform .6s ease; transform-style: preserve-3d; }
+    .t-box--flip:hover   { transform: rotateY(180deg); }
+    .t-box--flip .back {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      background: var(--teal);
+      transform: rotateY(180deg);
+      backface-visibility: hidden;
+      font-size: .72rem; letter-spacing: .15em;
+    }
+    .t-box--flip > span { backface-visibility: hidden; }
+
+    .t-box--translate { background: #2e2a1a; transition: transform .4s var(--ease-spring); }
+    .t-box--translate:hover { transform: translate(8px, -8px); }
+
+    .t-box--spin {
+      background: #2a1a2e;
+      animation: spinIdle 10s linear infinite;
+    }
+    .t-box--spin:hover { animation-duration: 1.5s; }
+    @keyframes spinIdle { to { transform: rotate(360deg); } }
+
+    /* ── RESPONSIVE CARD LAYOUT ────────────────────── */
+    .cards-section { background: var(--cream); }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .card {
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid #ddd5c2;
+      transition: box-shadow .35s ease, transform .35s var(--ease-spring);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.1);
+    }
+
+    .card--wide  { grid-column: span 8; }
+    .card--mid   { grid-column: span 4; }
+    .card--third { grid-column: span 4; }
+
+    @media (max-width: 900px) {
+      .card--wide, .card--mid, .card--third { grid-column: span 6; }
+    }
+    @media (max-width: 600px) {
+      .card--wide, .card--mid, .card--third { grid-column: span 12; }
+    }
+
+    .card__thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, var(--rust), var(--gold));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card__thumb::after {
+      content: attr(data-icon);
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 3rem;
+    }
+
+    .card__body { padding: 1.4rem; }
+    .card__tag {
+      display: inline-block;
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--gold);
+      padding: .2rem .6rem;
+      border-radius: 2px;
+      margin-bottom: .75rem;
+    }
+    .card__title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      line-height: 1.25;
+      margin-bottom: .5rem;
+    }
+    .card__meta {
+      font-size: .7rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+    }
+
+    /* ── ANIMATIONS SHOWCASE ───────────────────────── */
+    .anim-section { background: var(--paper); }
+
+    .anim-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 2.5rem;
+      align-items: center;
+    }
+
+    /* Loader ring */
+    .anim-ring {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: var(--rust);
+      border-right-color: var(--gold);
+      animation: ringPin 1.2s linear infinite;
+    }
+    @keyframes ringPin { to { transform: rotate(360deg); } }
+
+    /* Bouncing dots */
+    .anim-dots { display: flex; gap: .5rem; align-items: flex-end; height: 36px; }
+    .anim-dots span {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: dotBounce 1s ease-in-out infinite;
+    }
+    .anim-dots span:nth-child(2) { animation-delay: .15s; }
+    .anim-dots span:nth-child(3) { animation-delay: .3s;  }
+    @keyframes dotBounce {
+      0%,100% { transform: translateY(0);    opacity: 1;   }
+      50%      { transform: translateY(-20px); opacity: .6; }
+    }
+
+    /* Typing cursor */
+    .anim-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      color: var(--ink);
+      border-right: 2px solid var(--rust);
+      white-space: nowrap;
+      overflow: hidden;
+      width: 18ch;
+      animation: typing 3s steps(18) infinite alternate, blink .6s step-end infinite alternate;
+    }
+    @keyframes typing { from { width: 0; } to { width: 18ch; } }
+    @keyframes blink  { from { border-color: var(--rust); } to { border-color: transparent; } }
+
+    /* Wave bar */
+    .anim-wave { display: flex; align-items: flex-end; gap: 4px; height: 48px; }
+    .anim-wave span {
+      width: 6px;
+      border-radius: 3px;
+      background: var(--gold);
+      animation: wave 1.2s ease-in-out infinite;
+    }
+    .anim-wave span:nth-child(2) { animation-delay: .1s; }
+    .anim-wave span:nth-child(3) { animation-delay: .2s; }
+    .anim-wave span:nth-child(4) { animation-delay: .3s; }
+    .anim-wave span:nth-child(5) { animation-delay: .4s; }
+    @keyframes wave {
+      0%,100% { height: 8px;  }
+      50%      { height: 44px; }
+    }
+
+    /* Heart pulse */
+    .anim-heart {
+      font-size: 2.4rem;
+      animation: heartbeat 1.4s ease-in-out infinite;
+      display: inline-block;
+      color: var(--rust);
+    }
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1);    }
+      14%      { transform: scale(1.3);  }
+      28%      { transform: scale(1);    }
+      42%      { transform: scale(1.2);  }
+      70%      { transform: scale(1);    }
+    }
+
+    /* Progress bar */
+    .anim-progress {
+      flex: 1;
+      min-width: 200px;
+    }
+    .anim-progress-bar {
+      height: 6px;
+      background: var(--cream);
+      border-radius: 9px;
+      overflow: hidden;
+      position: relative;
+    }
+    .anim-progress-bar::after {
+      content: '';
+      position: absolute;
+      left: -50%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, var(--rust), var(--gold));
+      animation: progressSlide 1.8s ease-in-out infinite;
+      border-radius: 9px;
+    }
+    @keyframes progressSlide { to { left: 150%; } }
+    .anim-progress p {
+      font-size: .7rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+      margin-bottom: .5rem;
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: var(--muted);
+      text-align: center;
+      padding: 2.5rem;
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    footer strong { color: var(--gold); }
+
+    /* ── SCROLL REVEAL ─────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .7s ease, transform .7s var(--ease-spring);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero__blob"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow">CSS3 Showcase · Responsive Design</p>
+      <h1 class="hero__title">Craft <em>Bold</em><br>Interfaces</h1>
+      <p class="hero__sub">Columns · Icons · Animations · Transformations — all in pure CSS3</p>
+      <div class="hero__scroll"><i class="fa-solid fa-arrow-down"></i> Explore</div>
+    </div>
+  </section>
+
+  <!-- ── MULTI-COLUMN TEXT ── -->
+  <section class="columns-section reveal">
+    <p class="section-label">01 — Multi-Column Layout</p>
+    <h2>The Art of Reading Flow</h2>
+    <p>
+      The multi-column layout is one of CSS3's most powerful editorial tools, letting text flow naturally
+      across a defined number of columns — just like a newspaper or magazine. Column rules act as elegant
+      separators, guiding the reader's eye from one column to the next without interruption. Responsive
+      breakpoints ensure that on smaller screens the columns gracefully collapse, preserving readability
+      at every viewport width. The column-gap property controls white space between columns, giving
+      designers precise control over visual rhythm and density. Combining column-count with column-width
+      allows CSS to pick the optimal number of columns automatically based on the available space,
+      making the layout fluid and adaptive. Text alignment and hyphenation round out the typographic
+      refinement, ensuring clean ragged edges or perfectly justified blocks of prose depending on the
+      designer's intention. Together these properties bring print-quality typography to the browser.
+    </p>
+  </section>
+
+  <!-- ── ICONS ── -->
+  <section class="icons-section reveal">
+    <p class="section-label">02 — Icon Library</p>
+    <h2>Font Awesome Integration</h2>
+    <div class="icon-grid">
+      <div class="icon-card"><i class="fa-solid fa-bolt"></i><span>Energy</span></div>
+      <div class="icon-card"><i class="fa-solid fa-palette"></i><span>Design</span></div>
+      <div class="icon-card"><i class="fa-solid fa-code"></i><span>Code</span></div>
+      <div class="icon-card"><i class="fa-solid fa-rocket"></i><span>Launch</span></div>
+      <div class="icon-card"><i class="fa-solid fa-layer-group"></i><span>Layers</span></div>
+      <div class="icon-card"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Magic</span></div>
+      <div class="icon-card"><i class="fa-solid fa-chart-line"></i><span>Growth</span></div>
+      <div class="icon-card"><i class="fa-solid fa-shield-halved"></i><span>Security</span></div>
+      <div class="icon-card"><i class="fa-brands fa-css3-alt"></i><span>CSS3</span></div>
+      <div class="icon-card"><i class="fa-solid fa-globe"></i><span>Web</span></div>
+    </div>
+  </section>
+
+  <!-- ── CSS TRANSFORMATIONS ── -->
+  <section class="transforms-section reveal">
+    <p class="section-label">03 — CSS Transformations</p>
+    <h2>Hover Each Box</h2>
+    <div class="transform-grid">
+      <div class="t-box t-box--rotate">  <span>Rotate</span></div>
+      <div class="t-box t-box--scale">   <span>Scale</span></div>
+      <div class="t-box t-box--skew">    <span>Skew</span></div>
+      <div class="t-box t-box--flip">    <span>3D Flip</span><div class="back"><span>Flipped! ✦</span></div></div>
+      <div class="t-box t-box--translate"><span>Translate</span></div>
+      <div class="t-box t-box--spin">    <span>Spin</span></div>
+    </div>
+  </section>
+
+  <!-- ── RESPONSIVE CARDS ── -->
+  <section class="cards-section reveal">
+    <p class="section-label">04 — Responsive Grid Cards</p>
+    <h2>12-Column CSS Grid</h2>
+    <div class="card-grid">
+      <div class="card card--wide">
+        <div class="card__thumb" data-icon="🎨" style="background:linear-gradient(135deg,#c0391b,#d4a021)"></div>
+        <div class="card__body">
+          <span class="card__tag">Featured</span>
+          <p class="card__title">CSS Grid & Flexbox — The Dynamic Duo</p>
+          <p class="card__meta"><i class="fa-regular fa-clock"></i> 6 min read</p>
+        </div>
+      </div>
+      <div class="card card--mid">
+        <div class="card__thumb" data-icon="⚡" style="background:linear-gradient(135deg,#1a7a6e,#1a2e1e)"></div>
+        <div class="card__body">
+          <span class="card__tag">Animation</span>
+          <p class="card__title">Keyframes Deep Dive</p>
+          <p class="card__meta"><i class="fa-regular fa-clock"></i> 4 min read</p>
+        </div>
+      </div>
+      <div class="card card--third">
+        <div class="card__thumb" data-icon="🔠" style="background:linear-gradient(135deg,#2a1a2e,#c0391b)"></div>
+        <div class="card__body">
+          <span class="card__tag">Typography</span>
+          <p class="card__title">Variable Fonts & Clamp</p>
+          <p class="card__meta"><i class="fa-regular fa-clock"></i> 3 min read</p>
+        </div>
+      </div>
+      <div class="card card--third">
+        <div class="card__thumb" data-icon="📐" style="background:linear-gradient(135deg,#2e2a1a,#1a7a6e)"></div>
+        <div class="card__body">
+          <span class="card__tag">Layout</span>
+          <p class="card__title">Responsive Breakpoints</p>
+          <p class="card__meta"><i class="fa-regular fa-clock"></i> 3 min read</p>
+        </div>
+      </div>
+      <div class="card card--third">
+        <div class="card__thumb" data-icon="🎯" style="background:linear-gradient(135deg,#0d0d0d,#c0391b)"></div>
+        <div class="card__body">
+          <span class="card__tag">Transforms</span>
+          <p class="card__title">3D Perspective in CSS</p>
+          <p class="card__meta"><i class="fa-regular fa-clock"></i> 5 min read</p>
+        </div>
+      </div>
+      <div class="card card--third">
+        <div class="card__thumb" data-icon="✨" style="background:linear-gradient(135deg,#d4a021,#2e1a1a)"></div>
+        <div class="card__body">
+          <span class="card__tag">Effects</span>
+          <p class="card__title">Glassmorphism & Neumorphism</p>
+          <p class="card__meta"><i class="fa-regular fa-clock"></i> 4 min read</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ANIMATIONS ── -->
+  <section class="anim-section reveal">
+    <p class="section-label">05 — CSS3 Animations</p>
+    <h2>Pure CSS Motion</h2>
+    <div class="anim-row">
+      <div>
+        <p style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem">Spinner</p>
+        <div class="anim-ring"></div>
+      </div>
+      <div>
+        <p style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem">Bounce</p>
+        <div class="anim-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem">Typewriter</p>
+        <div class="anim-type">Hello, CSS World!</div>
+      </div>
+      <div>
+        <p style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem">Equaliser</p>
+        <div class="anim-wave">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem">Heartbeat</p>
+        <div class="anim-heart">♥</div>
+      </div>
+      <div class="anim-progress">
+        <p>Loading…</p>
+        <div class="anim-progress-bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    Built with <strong>Pure CSS3</strong> · Grid · Flexbox · Keyframes · Transforms · Media Queries
+  </footer>
+
+  <!-- ── SCROLL REVEAL JS ── -->
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: .12 });
+    reveals.forEach(r => io.observe(r));
+  </script>
+</body>
+</html>
